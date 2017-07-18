@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/themeColor"
+    android:orientation="vertical">
+    <com.bigcity.ui.MTopBarView
+        android:id="@+id/tbv_act_home"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        app:leftImage="@drawable/act_login_close"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:textSize="50sp"
+        android:text="@string/act_login_welcome"
+        android:gravity="center"
+        android:textColor="@color/act_login_textcolor"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="16sp"
+        android:text="@string/act_login_change"
+        android:gravity="center"
+        android:textColor="@color/act_login_textcolor"
+        />
+
+</LinearLayout>

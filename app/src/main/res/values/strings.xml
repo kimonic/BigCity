@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">TudouJF</string>
+    <string name="homepage">首页</string>
+    <string name="licai">理财</string>
+    <string name="more">更多</string>
+    <string name="my" >我的</string>
+    <string name="act_login_username">请输入用户名/手机号</string>
+    <string name="act_login_password">请输入密码(6&#8211;16位数字和字母组合)</string>
+    <string name="act_login_nozhanghao">没有账号?</string>
+    <string name="act_login_zhuceyouli">注册即可领28888元体验金</string>
+    <string name="act_login_forgetpassword">忘记密码?</string>
+    <string name="act_login_login">登录</string>
+    <string name="act_register_username">请输入手机号</string>
+    <string name="act_register_imagecode">请输入图形验证码</string>
+    <string name="act_register_phonecodehint">请输入手机验证码</string>
+    <string name="act_register_requestcode">获取验证码</string>
+    <string name="act_register_referrerhint">请输入推荐人(如无推荐人可不填写)</string>
+    <string name="act_register_login">已有账号,去登录</string>
+    <string name="act_register_agree" >注册即视为同意</string>
+    <string name="act_register_tudouxieyi">《土豆金服服务协议》</string>
+    <string name="act_affirm_title">确认密码</string>
+    <string name="act_affirm_password2">确认新密码</string>
+    <string name="act_affirm_complete">完成</string>
+    <string name="act_find_title">找回密码</string>
+    <string name="act_find_next">下一步</string>
+    <string name="act_find_username">请输入手机号</string>
+    <string name="act_register_register">注册领取28888元体验金</string>
+
+
+
+    <!-- 图案解锁 -->
+    <string name="lockscreen_access_pattern_start">"开始绘制图案"</string>
+    <string name="lockscreen_access_pattern_cleared">"图案已清除"</string>
+    <string name="lockscreen_access_pattern_cell_added">"已添加单元格"</string>
+    <string name="lockscreen_access_pattern_detected">"图案绘制完成"</string>
+    <string name="lockpattern_retry_button_text">"重试"</string>
+    <string name="lockpattern_continue_button_text">"继续"</string>
+    <string name="lockpattern_confirm_button_text">"确认"</string>
+    <string name="lockpattern_recording_intro_header">"绘制解锁图案"</string>
+    <string name="lockpattern_settings_help_how_to_record">"如何绘制解锁图案"</string>
+    <string name="lockpattern_recording_incorrect_too_short">"至少连接4个点，请重试"</string>
+    <string name="lockpattern_pattern_entered_header">"图案已记录"</string>
+    <string name="lockpattern_need_to_confirm">"请再次绘制解锁图案"</string>
+    <string name="lockpattern_need_to_unlock_wrong">"与上次输入不一致，请重试"</string>
+    <string name="lockpattern_pattern_confirmed_header">"确认保存新解锁图案"</string>
+    <string name="lockpattern_recording_inprogress">"完成后松开手指"</string>
+    <string name="gesture_password_guide_text">你可以创建一个解锁图案，这样他人在借用你的手机时，将无法打开应用。</string>
+    <string name="gesture_password_guide_creat_btn">创建手势密码</string>
+    <string name="act_lock_welcom">欢迎您,XXXXXXXXXXX</string>
+    <string name="act_lock_forget">忘记手势密码</string>
+    <string name="act_lock_other">使用其他账号登录</string>
+    <string name="errormoretimes">输入错误次数过多,请等待5分钟后再次重试</string>
+    <string name="inputsucess">输入成功</string>
+    <string name="act_drawgesture_pass">直接跳过</string>
+    <string name="act_drawgesture_error">手势密码前后输入不一致,请重新输入</string>
+    <string name="act_drawgesture_sucess">手势密码设置成功!</string>
+    <string name="act_drawgesture_hint">手势密码不能少于4个连接点,请重新设置</string>
+    <string name="mlockview_sucess">手势密码验证成功!</string>
+    <string name="act_login_welcome">welcome</string>
+    <string name="act_login_change">改变不美好\t\t\t\t创造更美好</string>
+
+
+</resources>

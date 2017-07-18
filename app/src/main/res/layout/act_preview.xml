@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/bt_act_preview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_login_login"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_affirm_title"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_login_forgetpassword"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="注册"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="锁屏界面"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="设置手势密码"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="上拉加载下拉刷新"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_login_login"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_login_login"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/bt_act_preview9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/act_login_login"
+        android:textSize="16sp" />
+
+
+</LinearLayout>

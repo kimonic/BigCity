@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="themeColor">#607D8B</color>
+    <color name="themeTextColor">#FEFBFF</color>
+    <color name="act_login_baccolor">#F0F0E8</color>
+    <color name="act_login_textcolor">#FFFFFF</color>
+    <color name="act_login_tvbac">#149BBB</color>
+    <color name="act_login_textcolor1">#F0FFF2</color>
+    <color name="act_register_tvcolor">#9D9AA1</color>
+    <color name="act_register_tvbac">#F2E798</color>
+    <color name="act_register_tvcolor1">#DF8137</color>
+    <color name="act_register_tvbac1" >#149BBB</color>
+    <color name="act_register_textcolor1">#FFFFEF</color>
+    <color name="act_affirm_bac">#F0F0E8</color>
+
+    <!--多处使用的颜色-->
+    <!--全局背景色-->
+    <color name="global_background_color">#F0F0E8</color>
+    <!--全局主题色-->
+    <color name="global_theme_background_color">#149BBB</color>
+    <color name="act_lock_textcolor1">#494843</color>
+    <color name="act_lock_textcolor2">#0C9FCB</color>
+    <color name="act_drawgesture_textcolor">#64635F</color>
+    <color name="act_register_tvcolor2">#42423A</color>
+</resources>
