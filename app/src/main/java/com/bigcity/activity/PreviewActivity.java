@@ -1,13 +1,10 @@
 package com.bigcity.activity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
-import com.lzy.okgo.callback.StringCallback;
-import com.lzy.okgo.model.Response;
 
 import butterknife.BindView;
 
