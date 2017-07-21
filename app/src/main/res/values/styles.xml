@@ -7,5 +7,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+    <style name="MyEditText" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/act_login_et</item>
+        <item name="colorControlActivated">@color/act_login_et</item>
+    </style>
 
+    <color name="act_login_et">#B1BBBF</color>
 </resources>

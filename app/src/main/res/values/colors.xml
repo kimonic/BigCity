@@ -25,4 +25,6 @@
     <color name="act_lock_textcolor2">#0C9FCB</color>
     <color name="act_drawgesture_textcolor">#64635F</color>
     <color name="act_register_tvcolor2">#42423A</color>
+    <color name="act_login_etwhite">#FFFFFF</color>
+    <color name="act_login_tvlogin">#455A64</color>
 </resources>

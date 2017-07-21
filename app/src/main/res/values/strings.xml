@@ -24,7 +24,7 @@
     <string name="act_find_title">找回密码</string>
     <string name="act_find_next">下一步</string>
     <string name="act_find_username">请输入手机号</string>
-    <string name="act_register_register">注册领取28888元体验金</string>
+    <string name="act_register_register">注册</string>
 
 
 
@@ -58,6 +58,16 @@
     <string name="mlockview_sucess">手势密码验证成功!</string>
     <string name="act_login_welcome">welcome</string>
     <string name="act_login_change">改变不美好\t\t\t\t创造更美好</string>
+    <string name="act_login_usernamehint">请输入用户名</string>
+    <string name="act_login_passwordhint">请输入密码</string>
+    <string name="act_register_passwordhint">请设置8&#8211;20位登陆密码</string>
+    <string name="act_login_sex">性别</string>
+    <string name="act_login_women">女</string>
+    <string name="act_login_men">男</string>
+    <string name="act_login_register">登陆</string>
+    <string name="act_login_registernow">立即注册</string>
+    <string name="act_register_usernamehint">请设置用户名</string>
+    <string name="act_register_loginnow">立即登陆</string>
 
 
 </resources>

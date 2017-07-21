@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.bigcity.R;
 import com.lzy.imagepicker.view.SystemBarTintManager;
 
 import butterknife.ButterKnife;
@@ -50,12 +51,12 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseMeth
 
     /** 设置状态栏颜色改变状态栏颜色 */
     protected int setStatusBarColor() {
-        return 0;
+        return getResources().getColor(R.color.themeColor);
     }
 
     /** 子类可以重写决定是否使用透明状态栏 */
     protected boolean translucentStatusBar() {
-        return false;
+        return true;
     }
 
     /** 设置状态栏颜色 */
