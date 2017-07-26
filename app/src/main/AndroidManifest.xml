@@ -28,6 +28,8 @@
         <activity android:name=".activity.LoginActivity"/>
         <!--注册activity-->
         <activity android:name=".activity.RegisterActivity"/>
+        <!--意见反馈activity-->
+        <activity android:name=".activity.FeedbackActivity"/>
         <!--预览界面activity-->
         <activity android:name=".activity.PreviewActivity">
             <intent-filter>

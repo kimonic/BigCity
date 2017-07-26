@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <com.bigcity.ui.MTopBarView
+        android:id="@+id/mtb_act_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        app:centerText="@string/act_feedback_title"
+        app:leftImage="@drawable/ic_arrowback"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:textSize="16sp"
+        android:textColor="@color/act_feedback_tvcolor"
+        android:gravity="center"
+        android:hint="@string/act_feedback_tvhint"
+        android:background="@drawable/xshape_rounrect_grayborder"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"  />
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="16sp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/act_feedback_tvcolor"
+        android:hint="@string/act_feedback_tvhint1"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:paddingRight="5dp"
+        android:background="@drawable/xshape_rounrect_grayborder"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/themeColor"
+        android:text="@string/act_feedback_send"
+        android:textSize="20sp"
+        android:textColor="@color/act_login_textcolor"
+        android:gravity="center"
+        />
+
+
+</LinearLayout>

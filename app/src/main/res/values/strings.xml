@@ -68,6 +68,10 @@
     <string name="act_login_registernow">立即注册</string>
     <string name="act_register_usernamehint">请设置用户名</string>
     <string name="act_register_loginnow">立即登陆</string>
+    <string name="act_feedback_tvhint">您的声音 我们用心聆听</string>
+    <string name="act_feedback_tvhint1">您的联系方式(可选)</string>
+    <string name="act_feedback_send">发送</string>
+    <string name="act_feedback_title">意见反馈</string>
 
 
 </resources>

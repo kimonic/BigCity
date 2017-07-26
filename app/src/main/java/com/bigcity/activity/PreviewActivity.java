@@ -57,6 +57,7 @@ public class PreviewActivity extends BaseActivity {
                 openActivity(RegisterActivity.class);
                 break;
             case R.id.bt_act_preview2:
+                openActivity(FeedbackActivity.class);
                 break;
             case R.id.bt_act_preview3:
                 break;
