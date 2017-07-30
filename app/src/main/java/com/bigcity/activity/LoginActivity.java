@@ -1,13 +1,16 @@
 package com.bigcity.activity;
 
+import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
 import com.bigcity.utils.ScreenSizeUtils;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * * ================================================
@@ -24,6 +27,8 @@ import butterknife.BindView;
 public class LoginActivity extends BaseActivity {
     @BindView(R.id.lv_act_login)
     LinearLayout lvActLogin;
+    @BindView(R.id.tv_act_login_close)
+    TextView tvClose;
 
     @Override
     public int getLayoutResId() {
@@ -32,7 +37,11 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.tv_act_login_close:
+                closeActivity();
+                break;
+        }
     }
 
     @Override
@@ -50,7 +59,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
+        tvClose.setOnClickListener(this);
     }
 
     @Override
@@ -62,7 +71,6 @@ public class LoginActivity extends BaseActivity {
     public void LoadInternetDataToUi() {
 
     }
-
 
 
 

@@ -28,4 +28,7 @@
     <color name="act_login_etwhite">#FFFFFF</color>
     <color name="act_login_tvlogin">#455A64</color>
     <color name="act_feedback_tvcolor">#999999</color>
+    <color name="act_my_textcolor">#666666</color>
+    <color name="act_my_textcolor1">#999999</color>
+    <color name="act_my_bacllcolor">#F2F2F2</color>
 </resources>

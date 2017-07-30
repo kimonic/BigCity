@@ -72,6 +72,9 @@
     <string name="act_feedback_tvhint1">您的联系方式(可选)</string>
     <string name="act_feedback_send">发送</string>
     <string name="act_feedback_title">意见反馈</string>
+    <string name="act_my_my">我的</string>
+    <string name="act_my_sixin">私信</string>
+    <string name="act_goodrecommend_title">好物推荐</string>
 
 
 </resources>

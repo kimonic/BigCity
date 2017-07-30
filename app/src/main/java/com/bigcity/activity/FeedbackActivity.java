@@ -55,7 +55,12 @@ public class FeedbackActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-
+            mtbFeedback.getLeftTV().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    closeActivity();
+                }
+            });
     }
 
     @Override

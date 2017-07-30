@@ -3,6 +3,7 @@ package com.bigcity.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
@@ -27,6 +28,8 @@ import butterknife.ButterKnife;
 public class RegisterActivity extends BaseActivity {
     @BindView(R.id.lv_register_close)
     LinearLayout lvRegisterClose;
+    @BindView(R.id.tv_act_register_close)
+    TextView tvClose;
 
     @Override
     public int getLayoutResId() {
@@ -35,7 +38,11 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
-
+        switch (v.getId()){
+            case R.id.tv_act_register_close:
+                closeActivity();
+                break;
+        }
     }
 
     @Override
@@ -53,6 +60,7 @@ public class RegisterActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        tvClose.setOnClickListener(this);
 
     }
 
@@ -67,4 +75,10 @@ public class RegisterActivity extends BaseActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }

@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.bigcity.ui.MTopBarView
+        android:id="@+id/mtb_act_my"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        app:centerText="@string/act_my_my"
+        />
+
+    <ImageView
+        android:id="@+id/iv_act_my_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:id="@+id/tv_act_my_nicheng"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="这里还是昵称"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/act_login_men"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/tv_act_my_qianming"
+        android:text="这个人很懒,还没有签名"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/act_my_textcolor1"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/act_my_bacllcolor"
+        android:orientation="horizontal">
+               <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+                   android:id="@+id/tv_act_my_tiezishu"
+                   android:layout_weight="1"
+            android:text="36"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_act_my_pinglunshu"
+            android:layout_weight="1"
+            android:text="36"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:background="@color/act_my_bacllcolor"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="帖子"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="评论"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/lv_act_my"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom"
+        android:background="@color/themeColor"
+        android:text="@string/act_my_sixin"
+        android:textSize="20sp"
+        android:textColor="@color/act_login_textcolor"
+        android:gravity="center"
+        android:id="@+id/tv_act_my_sixin"
+        />
+
+</LinearLayout>

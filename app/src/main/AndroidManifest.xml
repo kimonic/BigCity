@@ -30,6 +30,13 @@
         <activity android:name=".activity.RegisterActivity"/>
         <!--意见反馈activity-->
         <activity android:name=".activity.FeedbackActivity"/>
+        <!--我的activity-->
+        <activity android:name=".activity.MyActivity"/>
+        <!--好物推荐activity-->
+        <activity android:name=".activity.GoodRecommendActivity"/>
+
+
+
         <!--预览界面activity-->
         <activity android:name=".activity.PreviewActivity">
             <intent-filter>
