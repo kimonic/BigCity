@@ -31,4 +31,5 @@
     <color name="act_my_textcolor">#666666</color>
     <color name="act_my_textcolor1">#999999</color>
     <color name="act_my_bacllcolor">#F2F2F2</color>
+    <color name="act_home_bac">#263238</color>
 </resources>

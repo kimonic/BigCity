@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_frag_home_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/frag_home_huzhuwenda"
+            android:textColor="@color/act_login_etwhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_frag_home_2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/frag_home_kaixinyike"
+            android:textColor="@color/act_login_etwhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_frag_home_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/frag_home_jiaojiaopengyou"
+            android:textColor="@color/act_login_etwhite"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_frag_home_4"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/frag_home_jingchenggonglve"
+            android:textColor="@color/act_login_etwhite"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_frag_home"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

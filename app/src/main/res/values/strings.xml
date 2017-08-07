@@ -75,6 +75,12 @@
     <string name="act_my_my">我的</string>
     <string name="act_my_sixin">私信</string>
     <string name="act_goodrecommend_title">好物推荐</string>
+    <string name="act_sharkitoff_title">摇一摇</string>
+    <string name="act_home_title">大城小事</string>
+    <string name="frag_home_huzhuwenda">互助问答</string>
+    <string name="frag_home_kaixinyike">开心一刻</string>
+    <string name="frag_home_jiaojiaopengyou">交交朋友</string>
+    <string name="frag_home_jingchenggonglve">京城攻略</string>
 
 
 </resources>

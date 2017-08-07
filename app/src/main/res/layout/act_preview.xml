@@ -50,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="设置手势密码"
+        android:text="摇一摇"
         android:textSize="16sp" />
 
     <Button
@@ -58,7 +58,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="上拉加载下拉刷新"
+        android:text="首页activity"
         android:textSize="16sp" />
 
     <Button
