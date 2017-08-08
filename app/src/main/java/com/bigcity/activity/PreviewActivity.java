@@ -77,6 +77,7 @@ public class PreviewActivity extends BaseActivity {
                 openActivity(HomeActivity.class);
                 break;
             case R.id.bt_act_preview7:
+                openActivity(RelatedMeActivity.class);
                 break;
             case R.id.bt_act_preview8:
                 PushAgent mPushAgent = PushAgent.getInstance(this);

@@ -2,12 +2,12 @@ package com.bigcity.fragment;
 
 import android.view.View;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.bigcity.R;
 import com.bigcity.adapter.CommonLVAdapter;
 import com.bigcity.base.BaseFragment;
 import com.bigcity.bean.CommonBean;
+import com.bigcity.ui.MTopBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,32 +16,26 @@ import butterknife.BindView;
 
 /**
  * * ================================================
- * name:            HomeFragment
+ * name:            DiscoverFragment
  * guide:
  * author：          kimonik
  * version：          1.0
- * date：            2017/8/7
- * description：  首页界面activity第一个fragment
+ * date：            2017/8/8
+ * description：  首页界面activity第三个fragment--发现
  * history：
  * ===================================================
  */
 
-public class HomeFragment extends BaseFragment {
-    @BindView(R.id.tv_frag_home_1)
-    TextView tvFragHome1;
-    @BindView(R.id.tv_frag_home_2)
-    TextView tvFragHome2;
-    @BindView(R.id.tv_frag_home_3)
-    TextView tvFragHome3;
-    @BindView(R.id.tv_frag_home_4)
-    TextView tvFragHome4;
-    @BindView(R.id.lv_frag_home)
-    ListView lvFragHome;
+public class DiscoverFragment extends BaseFragment {
+    @BindView(R.id.mtb_frag_discover)
+    MTopBarView mtbFragDiscover;
+    @BindView(R.id.lv_frag_discover)
+    ListView lvFragDiscover;
     private List<CommonBean> list;
 
     @Override
     public int layoutRes() {
-        return R.layout.frag_home;
+        return R.layout.frag_discover;
     }
 
     @Override
@@ -51,15 +45,11 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initDataFromIntent() {
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
-            CommonBean bean=new CommonBean();
+            CommonBean bean = new CommonBean();
             bean.setTitle("这是标题");
-            bean.setContent("iefrhfnklsfnskdfh;fjknfkvfnsdkfweiafkvnksdaisdfjeiw;fd" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiwkxnfdksf");
+
             bean.setHuifushu("23");
             bean.setLiulanshu("56");
             bean.setImaId(R.drawable.act_my_icon);
@@ -73,8 +63,8 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        CommonLVAdapter adapter=new CommonLVAdapter(getActivity(),list);
-        lvFragHome.setAdapter(adapter);
+        CommonLVAdapter adapter = new CommonLVAdapter(getActivity(), list);
+        lvFragDiscover.setAdapter(adapter);
     }
 
     @Override

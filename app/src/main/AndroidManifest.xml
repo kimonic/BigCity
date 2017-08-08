@@ -60,6 +60,8 @@
         <activity android:name=".activity.SharkItOffActivity"/>
         <!--首页activity-->
         <activity android:name=".activity.HomeActivity"/>
+        <!--与我相关activity-->
+        <activity android:name=".activity.RelatedMeActivity"/>
 
 
 
@@ -131,6 +133,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"/>
+        <activity android:name=".activity.RelatedMeActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

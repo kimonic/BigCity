@@ -81,6 +81,9 @@
     <string name="frag_home_kaixinyike">开心一刻</string>
     <string name="frag_home_jiaojiaopengyou">交交朋友</string>
     <string name="frag_home_jingchenggonglve">京城攻略</string>
+    <string name="act_relatedme_title">与我相关</string>
+    <string name="act_discover_title">发现</string>
+    <string name="frag_discover_title">发现</string>
 
 
 </resources>
