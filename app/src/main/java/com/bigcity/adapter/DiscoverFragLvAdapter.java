@@ -16,20 +16,21 @@ import java.util.List;
 
 /**
  * * ================================================
- * name:            RelatedMeActLvAdapter
+ * name:            DiscoverFragLvAdapter
  * guide:
  * author：          kimonik
  * version：          1.0
  * date：            2017/8/8
- * description：  与我相关--lvadapter
+ * description：  首页--发现--lvadapter
  * history：
  * ===================================================
  */
-public class RelatedMeActLvAdapter extends BaseAdapter {
+
+public class DiscoverFragLvAdapter extends BaseAdapter {
     private Context context;
     private List<CommonBean> list;
 
-    public RelatedMeActLvAdapter(Context context, List<CommonBean> list) {
+    public DiscoverFragLvAdapter(Context context, List<CommonBean> list) {
         this.context = context;
         this.list = list;
     }
@@ -54,12 +55,10 @@ public class RelatedMeActLvAdapter extends BaseAdapter {
         View view;
         ViewHolder viewHolder;
         if (convertView==null){
-            view= LayoutInflater.from(context).inflate(R.layout.lvitem_relatedmeactadapter,parent,false);
+            view= LayoutInflater.from(context).inflate(R.layout.lvitem_discoverfragadapter,parent,false);
             viewHolder=new ViewHolder();
-            viewHolder.imageView1= (ImageView) view.findViewById(R.id.iv_lvitem_relatedmeact1);
-            viewHolder.imageView2= (ImageView) view.findViewById(R.id.iv_lvitem_relatedmeact2);
-            viewHolder.textView1= (TextView) view.findViewById(R.id.tv_lvitem_relatedmeact1);
-            viewHolder.textView2= (TextView) view.findViewById(R.id.tv_lvitem_relatedmeact2);
+            viewHolder.imageView1= (ImageView) view.findViewById(R.id.iv_lvitem_discoveract);
+            viewHolder.textView1= (TextView) view.findViewById(R.id.tv_lvitem_discoveract);
             view.setTag(viewHolder);
 
         }else {
@@ -68,11 +67,9 @@ public class RelatedMeActLvAdapter extends BaseAdapter {
         }
 
         viewHolder.textView1.setText(list.get(position).getTitle());
-        viewHolder.textView2.setText(list.get(position).getContent());
 
 
-        ImageGlideUtils.loadCircularImage(viewHolder.imageView1,list.get(position).getImaId());
-        viewHolder.imageView2.setBackgroundResource(list.get(position).getImaId1());
+        viewHolder.imageView1.setBackgroundResource(list.get(position).getImaId1());
 
 
 
@@ -81,7 +78,7 @@ public class RelatedMeActLvAdapter extends BaseAdapter {
     }
 
     private class ViewHolder{
-        private TextView textView1,textView2;
-        private ImageView imageView1,imageView2;
+        private TextView textView1;
+        private ImageView imageView1;
     }
 }

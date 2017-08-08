@@ -1,13 +1,16 @@
 package com.bigcity.activity;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.bigcity.R;
 import com.bigcity.adapter.HomeFragVPAdapter;
 import com.bigcity.base.BaseActivity;
+import com.bigcity.fragment.DiscoverFragment;
 import com.bigcity.fragment.HomeFragment;
 import com.bigcity.ui.MTopBarView;
 import com.bigcity.utils.ScreenSizeUtils;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * * ================================================
@@ -44,8 +48,22 @@ public class HomeActivity extends BaseActivity {
     LinearLayout llActHome3;
     @BindView(R.id.ll_act_home4)
     LinearLayout llActHome4;
+    @BindView(R.id.tv_act_home1)
+    TextView tvActHome1;
+    @BindView(R.id.tv_act_home2)
+    TextView tvActHome2;
+    @BindView(R.id.tv_act_home3)
+    TextView tvActHome3;
+    @BindView(R.id.tv_act_home4)
+    TextView tvActHome4;
 
-    private List<Fragment>  list;
+    private List<Fragment> list;
+    private List<TextView> listL;
+    private int imaRes[] = new int[]{R.drawable.act_home_cafeunsel,
+            R.drawable.act_home_maopaounsel,
+            R.drawable.ic_act_home_zhinanzhenunsel
+            , R.drawable.ic_act_home_myunsel
+    };
 
     @Override
     public int getLayoutResId() {
@@ -54,21 +72,46 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_act_home1:
+                vpActHome.setCurrentItem(0);
+                setButtonStyle(0);
+                break;
+            case R.id.ll_act_home2:
+                vpActHome.setCurrentItem(1);
+                setButtonStyle(1);
+                break;
+            case R.id.ll_act_home3:
+                vpActHome.setCurrentItem(2);
+                setButtonStyle(2);
+                break;
+            case R.id.ll_act_home4:
+                vpActHome.setCurrentItem(3);
+                setButtonStyle(3);
+                break;
+        }
 
     }
 
     @Override
     public void initDataFromIntent() {
 
-        list=new ArrayList<>();
-        HomeFragment fragment1=new HomeFragment();
-        HomeFragment fragment2=new HomeFragment();
-        HomeFragment fragment3=new HomeFragment();
-        HomeFragment fragment4=new HomeFragment();
+        list = new ArrayList<>();
+        HomeFragment fragment1 = new HomeFragment();
+        HomeFragment fragment2 = new HomeFragment();
+        DiscoverFragment fragment3 = new DiscoverFragment();
+        HomeFragment fragment4 = new HomeFragment();
         list.add(fragment1);
         list.add(fragment2);
         list.add(fragment3);
         list.add(fragment4);
+
+
+        listL = new ArrayList<>();
+        listL.add(tvActHome1);
+        listL.add(tvActHome2);
+        listL.add(tvActHome3);
+        listL.add(tvActHome4);
 
     }
 
@@ -79,7 +122,7 @@ public class HomeActivity extends BaseActivity {
         params.setMargins(0, ScreenSizeUtils.getStatusHeight(this), 0, 0);
         mtbActHome.setLayoutParams(params);
 
-        HomeFragVPAdapter adapter=new HomeFragVPAdapter(getSupportFragmentManager(),list);
+        HomeFragVPAdapter adapter = new HomeFragVPAdapter(getSupportFragmentManager(), list);
         vpActHome.setAdapter(adapter);
         vpActHome.setOffscreenPageLimit(4);
 
@@ -88,6 +131,49 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initListener() {
+        vpActHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        mtbActHome.setCenterTitle(R.string.dachengxiaoshi);
+                        mtbActHome.getRightTV().setVisibility(View.VISIBLE);
+                        setButtonStyle(0);
+                        break;
+                    case 1:
+                        mtbActHome.setCenterTitle(R.string.xiaoxi);
+                        mtbActHome.getRightTV().setVisibility(View.VISIBLE);
+                        setButtonStyle(1);
+                        break;
+                    case 2:
+                        mtbActHome.setCenterTitle(R.string.frag_discover_title);
+                        mtbActHome.getRightTV().setVisibility(View.GONE);
+                        setButtonStyle(2);
+                        break;
+                    case 3:
+                        mtbActHome.setCenterTitle(R.string.my);
+                        mtbActHome.getRightTV().setVisibility(View.VISIBLE);
+                        setButtonStyle(3);
+                        break;
+                }
+
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        llActHome1.setOnClickListener(this);
+        llActHome2.setOnClickListener(this);
+        llActHome3.setOnClickListener(this);
+        llActHome4.setOnClickListener(this);
 
     }
 
@@ -99,6 +185,28 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void LoadInternetDataToUi() {
 
+    }
+
+    private void setButtonStyle(int position) {
+        switch (position) {
+            case 0:
+                tvActHome1.setBackgroundResource(R.drawable.act_home_cafesel);
+                break;
+            case 1:
+                tvActHome2.setBackgroundResource(R.drawable.act_home_maopaosel);
+                break;
+            case 2:
+                tvActHome3.setBackgroundResource(R.drawable.act_home_zhinanzhensel);
+                break;
+            case 3:
+                tvActHome4.setBackgroundResource(R.drawable.act_home_mysel);
+                break;
+        }
+        for (int i = 0; i < listL.size(); i++) {
+            if (position != i) {
+                listL.get(i).setBackgroundResource(imaRes[i]);
+            }
+        }
     }
 
 

@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
-    <com.bigcity.ui.MTopBarView
-        android:id="@+id/mtb_frag_discover"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@color/themeColor"
-        app:centerText="@string/frag_discover_title"
-        app:leftImage="@drawable/ic_arrowback"/>
+
     <ListView
         android:id="@+id/lv_frag_discover"
         android:layout_width="match_parent"

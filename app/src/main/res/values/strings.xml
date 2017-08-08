@@ -84,6 +84,8 @@
     <string name="act_relatedme_title">与我相关</string>
     <string name="act_discover_title">发现</string>
     <string name="frag_discover_title">发现</string>
+    <string name="dachengxiaoshi">大城小事</string>
+    <string name="xiaoxi">消息</string>
 
 
 </resources>
