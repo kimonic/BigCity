@@ -58,7 +58,7 @@ public class DiscoverFragment extends BaseFragment {
 
 
         CommonBean bean2= new CommonBean();
-        bean2.setTitle("漂流瓶");
+        bean2.setTitle("好物推荐");
         bean2.setImaId1(R.drawable.frag_discover_piaoliuping);
         list.add(bean2);
 

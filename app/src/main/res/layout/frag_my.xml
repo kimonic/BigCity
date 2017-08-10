@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+
+    <ImageView
+        android:id="@+id/iv_frag_my_icon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:layout_marginTop="20dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginBottom="5dp"
+        >
+        <TextView
+            android:id="@+id/tv_frag_my_nicheng"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这里还是昵称"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:background="@drawable/act_login_men"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_frag_my_qianming"
+        android:text="这个人很懒,还没有签名"
+        android:gravity="center"
+        android:textSize="12sp"
+        android:textColor="@color/act_my_textcolor1"
+        android:layout_marginBottom="10dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/act_my_bacllcolor"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_frag_my_tiezishu"
+            android:layout_weight="1"
+            android:text="36"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/tv_frag_my_pinglunshu"
+            android:layout_weight="1"
+            android:text="36"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:background="@color/act_my_bacllcolor"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="帖子"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="评论"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/act_my_textcolor"
+            />
+
+    </LinearLayout>
+
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:id="@+id/lv_frag_my"
+        />
+
+
+</LinearLayout>

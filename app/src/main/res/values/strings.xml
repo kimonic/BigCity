@@ -86,6 +86,7 @@
     <string name="frag_discover_title">发现</string>
     <string name="dachengxiaoshi">大城小事</string>
     <string name="xiaoxi">消息</string>
+    <string name="frag_message_yuwoxiangguan">与我相关</string>
 
 
 </resources>

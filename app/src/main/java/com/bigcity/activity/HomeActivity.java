@@ -12,6 +12,8 @@ import com.bigcity.adapter.HomeFragVPAdapter;
 import com.bigcity.base.BaseActivity;
 import com.bigcity.fragment.DiscoverFragment;
 import com.bigcity.fragment.HomeFragment;
+import com.bigcity.fragment.MessageFragment;
+import com.bigcity.fragment.MyFragment;
 import com.bigcity.ui.MTopBarView;
 import com.bigcity.utils.ScreenSizeUtils;
 
@@ -98,9 +100,9 @@ public class HomeActivity extends BaseActivity {
 
         list = new ArrayList<>();
         HomeFragment fragment1 = new HomeFragment();
-        HomeFragment fragment2 = new HomeFragment();
+        MessageFragment fragment2 = new MessageFragment();
         DiscoverFragment fragment3 = new DiscoverFragment();
-        HomeFragment fragment4 = new HomeFragment();
+        MyFragment fragment4 = new MyFragment();
         list.add(fragment1);
         list.add(fragment2);
         list.add(fragment3);
