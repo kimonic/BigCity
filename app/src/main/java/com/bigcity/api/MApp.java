@@ -18,6 +18,7 @@ import com.umeng.message.PushAgent;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 
+import cn.bmob.v3.Bmob;
 import okhttp3.OkHttpClient;
 
 /**
@@ -37,6 +38,13 @@ public class MApp extends Application{
         super.onCreate();
         Log.e("TAG", "onSuccess:-------onF4545re--- dsdsd111" );
         initOkGo();
+
+
+        //第一：默认初始化
+        Bmob.initialize(this, "07cef00bce13ef1ccf87fab3e05336bb");
+        // 注:自v3.5.2开始，数据sdk内部缝合了统计sdk，开发者无需额外集成，传渠道参数即可，不传默认没开启数据统计功能
+        //Bmob.initialize(this, "Your Application ID","bmob");
+
 
         PushAgent mPushAgent = PushAgent.getInstance(this);
 //注册推送服务，每次调用register方法都会回调该接口

@@ -31,6 +31,8 @@
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
+    <!--bomb权限-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".api.MApp"
@@ -135,6 +137,8 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"/>
         <activity android:name=".activity.RelatedMeActivity" />
+        <!--bomb测试activity-->
+        <activity android:name=".bombtest.BombTestActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"
@@ -148,6 +152,8 @@
             android:name="UMENG_CHANNEL"
             android:value="12121" >
         </meta-data>
+
+
 
 
     </application>
