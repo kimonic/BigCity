@@ -136,9 +136,10 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"/>
-        <activity android:name=".activity.RelatedMeActivity" />
         <!--bomb测试activity-->
         <activity android:name=".bombtest.BombTestActivity" />
+        <!--BlogBmobBean数据库添加activity-->
+        <activity android:name=".datamanage.BlogBmobBeanAddActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

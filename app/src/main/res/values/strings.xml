@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TudouJF</string>
+    <string name="app_name">BigCity</string>
     <string name="homepage">首页</string>
     <string name="licai">理财</string>
     <string name="more">更多</string>
@@ -87,6 +87,19 @@
     <string name="dachengxiaoshi">大城小事</string>
     <string name="xiaoxi">消息</string>
     <string name="frag_message_yuwoxiangguan">与我相关</string>
+    <string name="touxiangurl">头像url</string>
+    <string name="biaoti">标题</string>
+    <string name="zhanshineirong">展示内容</string>
+    <string name="peitu1">配图1</string>
+    <string name="peitu3">配图3</string>
+    <string name="peitu2">配图2</string>
+    <string name="liulancishu">浏览次数</string>
+    <string name="huifucishu">回复次数</string>
+    <string name="tijiaoshuju">提交数据</string>
+    <string name="shiyongleixing">适用类型--互助问答,开心一刻等</string>
+    <string name="zuozhe">文章作者</string>
+    <string name="wenzhangxiangqing">文章详情</string>
+    <string name="wenzhangguanlitupiandizhi">文章关联图片地址</string>
 
 
 </resources>

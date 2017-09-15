@@ -18,6 +18,7 @@
             android:gravity="center"
             android:text="@string/frag_home_huzhuwenda"
             android:textColor="@color/act_login_etwhite"
+            android:background="@color/color_red"
             android:textSize="18sp" />
 
         <TextView
@@ -51,10 +52,9 @@
             android:textSize="18sp" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/lv_frag_home"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_frag_home"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

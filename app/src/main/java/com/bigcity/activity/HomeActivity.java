@@ -75,19 +75,19 @@ public class HomeActivity extends BaseActivity {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.ll_act_home1:
+            case R.id.ll_act_home1://大城小事
                 vpActHome.setCurrentItem(0);
                 setButtonStyle(0);
                 break;
-            case R.id.ll_act_home2:
+            case R.id.ll_act_home2://消息
                 vpActHome.setCurrentItem(1);
                 setButtonStyle(1);
                 break;
-            case R.id.ll_act_home3:
+            case R.id.ll_act_home3://发现
                 vpActHome.setCurrentItem(2);
                 setButtonStyle(2);
                 break;
-            case R.id.ll_act_home4:
+            case R.id.ll_act_home4://我的
                 vpActHome.setCurrentItem(3);
                 setButtonStyle(3);
                 break;

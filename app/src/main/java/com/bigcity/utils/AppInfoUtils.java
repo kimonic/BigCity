@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 
 /**
  * * ================================================
@@ -97,4 +98,34 @@ public class AppInfoUtils {
         ApplicationInfo info = context.getApplicationInfo();
         return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
     }
+
+    /**
+     * 获取手机品牌
+     *
+     * @return
+     */
+    public static String getPhoneName() {
+        return Build.MANUFACTURER;
+    }
+
+
+    /**
+     * 获取手机品牌型号
+     *
+     * @return
+     */
+    public static String getPhoneVersion() {
+        return Build.MODEL;
+    }
+
+
+    /**
+     * 获取手机系统版本号
+     *
+     * @return
+     */
+    public static String getPhoneSystemVersion() {
+        return Build.VERSION.RELEASE;
+    }
+
 }

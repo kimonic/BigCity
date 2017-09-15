@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "26.0.0"
+    buildToolsVersion "26.0.1"
 
 //    **兼容Android6.0系统所需，如果这句话报错，可在dependencies标签下使用compile 'cn.bmob.android:http-legacy:1.0'**
     useLibrary 'org.apache.http.legacy'
@@ -10,15 +10,17 @@ android {
     defaultConfig {
         applicationId "com.bigcity"
         minSdkVersion 16
-        targetSdkVersion 25
+        targetSdkVersion 26
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true//解决多jar包冲突
     }
     defaultConfig {
         ndk {
             abiFilters "armeabi", "x86"
         }
+
     }
 
 
@@ -42,6 +44,7 @@ android {
             keyAlias "androiddebugkey"
             keyPassword "android"
         }
+
     }
 //    lintOptions {
 //        abortOnError false
@@ -60,7 +63,8 @@ dependencies {
 
     compile project(':PushSDK')
     compile 'com.android.support:appcompat-v7: 25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+
+//    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
     testCompile 'junit:junit:4.12'
     //butterknife依赖
     compile 'com.jakewharton:butterknife:8.6.0'
@@ -131,15 +135,17 @@ dependencies {
     //3.5.5：请务必查看下面注释[1]
     compile 'cn.bmob.android:bmob-sdk:3.5.7'
 
+
+
     //bmob-push：Bmob的推送包
     compile 'cn.bmob.android:bmob-push:0.8'
 
     //bmob-im：Bmob的即时通讯包，注意每个版本的im依赖特定版本的bmob-sdk，具体的依赖关系可查看下面注释[2]
     compile 'cn.bmob.android:bmob-im:2.0.5@aar'
-    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
+//    compile 'cn.bmob.android:bmob-sdk:3.4.7-aar'
 
 //    //bmob-sms ：Bmob单独为短信服务提供的包
-//    compile 'cn.bmob.android:bmob-sms:1.0.1'
+    compile 'cn.bmob.android:bmob-sms:1.0.1'
 
     //如果你想应用能够兼容Android6.0，请添加此依赖(org.apache.http.legacy.jar)
     compile 'cn.bmob.android:http-legacy:1.0'

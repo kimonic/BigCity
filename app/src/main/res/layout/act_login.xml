@@ -57,6 +57,7 @@
             android:layout_marginEnd="10dp"
             />
         <EditText
+            android:id="@+id/et_act_login_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -87,6 +88,7 @@
 
             />
         <EditText
+            android:id="@+id/et_act_login_code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
@@ -100,94 +102,8 @@
             />
     </LinearLayout>
 
-
-    <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="50dp"-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_marginTop="20dp"-->
-        <!--android:gravity="center_vertical"-->
-        <!--android:layout_marginLeft="40dp"-->
-        <!--android:layout_marginRight="40dp"-->
-        <!--&gt;-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--&gt;-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/act_login_sex"-->
-                <!--/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/act_login_sex"-->
-                <!--android:textColor="@color/act_login_etwhite"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--/>-->
-
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--&gt;-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/act_login_men"-->
-                <!--/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/act_login_men"-->
-                <!--android:textColor="@color/act_login_etwhite"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--/>-->
-
-
-        <!--</LinearLayout>-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:layout_weight="1"-->
-            <!--&gt;-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:background="@drawable/act_login_women"-->
-                <!--/>-->
-            <!--<TextView-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:gravity="center"-->
-                <!--android:text="@string/act_login_women"-->
-                <!--android:textColor="@color/act_login_etwhite"-->
-                <!--android:textSize="16sp"-->
-                <!--android:layout_marginLeft="10dp"-->
-                <!--android:layout_marginStart="10dp"-->
-                <!--/>-->
-
-
-        <!--</LinearLayout>-->
-
-    <!--</LinearLayout>-->
     <TextView
+        android:id="@+id/tv_act_login_login"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/act_login_register"
@@ -201,6 +117,7 @@
         />
 
     <TextView
+        android:id="@+id/tv_act_login_register"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/act_login_registernow"

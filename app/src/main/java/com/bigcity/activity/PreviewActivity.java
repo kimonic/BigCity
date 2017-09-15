@@ -8,6 +8,7 @@ import android.widget.Button;
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
 import com.bigcity.bombtest.BombTestActivity;
+import com.bigcity.datamanage.BlogBmobBeanAddActivity;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 
@@ -49,6 +50,8 @@ public class PreviewActivity extends BaseActivity {
     Button btActPreview9;
     @BindView(R.id.bt_act_preview10)
     Button btActPreview10;
+ @BindView(R.id.bt_act_preview11)
+    Button btActPreview11;
 
     @Override
     public int getLayoutResId() {
@@ -95,6 +98,9 @@ public class PreviewActivity extends BaseActivity {
             case R.id.bt_act_preview10:
                 openActivity(BombTestActivity.class);
                 break;
+            case R.id.bt_act_preview11:
+                openActivity(BlogBmobBeanAddActivity.class);
+                break;
         }
     }
 
@@ -122,6 +128,7 @@ public class PreviewActivity extends BaseActivity {
         btActPreview8.setOnClickListener(this);
         btActPreview9.setOnClickListener(this);
         btActPreview10.setOnClickListener(this);
+        btActPreview11.setOnClickListener(this);
     }
 
     @Override

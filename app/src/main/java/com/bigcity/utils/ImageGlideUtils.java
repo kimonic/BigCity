@@ -46,4 +46,16 @@ public class ImageGlideUtils {
                 .bitmapTransform(new CropCircleTransformation(view.getContext()))
                 .into(view);
     }
+
+    /**加载圆形本地资源图片*/
+    public static  void loadImage(ImageView view,String url) {
+        Glide.with(view.getContext())
+                .load(url)
+                .error(R.mipmap.ic_launcher) //加载图片失败的时候显示的默认图
+                .placeholder(R.mipmap.ic_launcher)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)//图片缓存策略,这个一般必须有
+                .crossFade()//淡入淡出
+                .centerCrop()
+                .into(view);
+    }
 }
