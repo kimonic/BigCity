@@ -40,6 +40,16 @@ public class BlogBmobBean extends BmobObject {
     private String  releaseTimeHour;
     /**唯一标识id--关联表使用*/
     private String   id;
+    /**在某一天的id,当天的发表顺序,越小越早*/
+    private int  dateId;
+
+    public int getDateId() {
+        return dateId;
+    }
+
+    public void setDateId(int dateId) {
+        this.dateId = dateId;
+    }
 
     public String getId() {
         return id;

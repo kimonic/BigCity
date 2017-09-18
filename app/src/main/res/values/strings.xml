@@ -100,6 +100,9 @@
     <string name="zuozhe">文章作者</string>
     <string name="wenzhangxiangqing">文章详情</string>
     <string name="wenzhangguanlitupiandizhi">文章关联图片地址</string>
+    <string name="cancel">取消</string>
+    <string name="zaicidianjijtcbgym">再次点击将退出该页面</string>
+    <string name="dangtianriqidefabuid">当天日期的发布id,从1开始</string>
 
 
 </resources>

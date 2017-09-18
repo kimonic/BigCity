@@ -163,7 +163,15 @@ public class TimeUtils {
      */
     public static int getCurrentYear() {
         Calendar calendar = Calendar.getInstance();
-        return calendar.get(Calendar.YEAR);// 获取当前月份
+        return calendar.get(Calendar.YEAR);// 获取当前年份
+    }
+
+    /**
+     * 获取当前年份
+     */
+    public static String getCurrentYearStr() {
+        Calendar calendar = Calendar.getInstance();
+        return ""+calendar.get(Calendar.YEAR);// 获取当前年份
     }
 
     /**

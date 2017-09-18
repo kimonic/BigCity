@@ -82,24 +82,24 @@ public class HomeFragment extends BaseFragment {
         list = new ArrayList<>();
         HomeChildFragment fragment1 = new HomeChildFragment();
         Bundle bundle1 = new Bundle();
-        bundle1.putString("type", "1");
+        bundle1.putInt("type", 1);
         fragment1.setArguments(bundle1);
 
 
         HomeChildFragment fragment2 = new HomeChildFragment();
         Bundle bundle2 = new Bundle();
-        bundle2.putString("type", "2");
+        bundle2.putInt("type", 2);
         fragment2.setArguments(bundle2);
 
 
         HomeChildFragment fragment3 = new HomeChildFragment();
         Bundle bundle3 = new Bundle();
-        bundle3.putString("type", "3");
+        bundle3.putInt("type", 3);
         fragment3.setArguments(bundle3);
 
         HomeChildFragment fragment4 = new HomeChildFragment();
         Bundle bundle4 = new Bundle();
-        bundle4.putString("type", "4");
+        bundle4.putInt("type", 4);
         fragment4.setArguments(bundle4);
 
 

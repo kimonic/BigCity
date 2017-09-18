@@ -1,5 +1,8 @@
 package com.bigcity.fragment;
 
+import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -9,7 +12,11 @@ import com.bigcity.adapter.HomeChildFragLvAdapter;
 import com.bigcity.base.BaseFragment;
 import com.bigcity.bean.CommonBean;
 import com.bigcity.bean.bmobbean.BlogBmobBean;
+import com.bigcity.utils.DialogUtils;
 import com.bigcity.utils.ToastUtils;
+import com.scwang.smartrefresh.header.MaterialHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +42,16 @@ import cn.bmob.v3.listener.FindListener;
 public class HomeChildFragment extends BaseFragment {
     @BindView(R.id.lv_frag_homechild)
     ListView lvFragHomeChild;
+    @BindView(R.id.srl_frag_homechild)
+    SmartRefreshLayout srl;
+
     Unbinder unbinder;
     private List<CommonBean> list;
     private List<BlogBmobBean> listBlog;
+    private AlertDialog  dialog;
+
+    /**要加载的数据类型*/
+    private int type=1;
 
 
     @Override
@@ -52,35 +66,24 @@ public class HomeChildFragment extends BaseFragment {
 
     @Override
     public void initDataFromIntent() {
-        list=new ArrayList<>();
-        for (int i = 0; i < 20; i++) {
-            CommonBean bean=new CommonBean();
-            bean.setTitle("这是标题");
-            bean.setContent("iefrhfnklsfnskdfh;fjknfkvfnsdkfweiafkvnksdaisdfjeiw;fd" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiw" +
-                    "fjknfkvfnsdkfweiafkvnksdaisdfjeiwfjknfkvfnsdkfweiafkvnksdaisdfjeiwkxnfdksf");
-            bean.setHuifushu("23");
-            bean.setLiulanshu("56");
-            bean.setImaId(R.drawable.act_my_icon);
-            bean.setImaId1(R.drawable.icon_temp1);
-            bean.setImaId2(R.drawable.icon_temp2);
-            bean.setImaId3(R.drawable.icon_temp3);
-            //头像图片地址
-            //http://www.pconline.com.cn/images/html/viewpic_pconline.htm?http:
-            // img0.pconline.com.cn/pconline/1405/27/4840043_f689635f6e18bd3367803e941140462c1.jpg&channel=9261
-            list.add(bean);
 
-
-
+        Bundle bundle=getArguments();
+        if (bundle!=null){
+            type=bundle.getInt("type",1);
         }
+
     }
 
     @Override
     public void initView() {
-        CommonLVAdapter adapter=new CommonLVAdapter(getActivity(),list);
-        lvFragHomeChild.setAdapter(adapter);
+//        CommonLVAdapter adapter=new CommonLVAdapter(getActivity(),list);
+//        lvFragHomeChild.setAdapter(adapter);
+
+        dialog= DialogUtils.showProgreessDialog(getActivity(),getResources().getString(R.string.zaicidianjijtcbgym));
+        //刷新加载
+        srl.setPrimaryColorsId(R.color.themeColor);
+        srl.setRefreshHeader(new MaterialHeader(getActivity()).setShowBezierWave(true));
+        srl.setRefreshFooter(new BallPulseFooter(getActivity()));
     }
 
     @Override
@@ -90,15 +93,19 @@ public class HomeChildFragment extends BaseFragment {
 
     @Override
     public void initDataFromInternet() {
+        dialog.show();
         BmobQuery<BlogBmobBean> query = new BmobQuery<>();
         //查询playerName叫“比目”的数据
-        query.addWhereEqualTo("releaseTimeDate", "20170915");
+//        query.addWhereEqualTo("releaseTimeDate", "20170915");
+        Log.e("TAG", "initDataFromInternet: ---------------------"+type);
+        query.addWhereEqualTo("type", ""+type);
         //返回50条数据，如果不加上这条语句，默认返回10条数据
         query.setLimit(50);
         //执行查询方法
         query.findObjects(new FindListener<BlogBmobBean>() {
             @Override
             public void done(List<BlogBmobBean> object, BmobException e) {
+                dialog.dismiss();
                 if (e == null) {
                     //                    ToastUtils.showToast(RegisterActivity.this, "查询成功：共" + object.size() + "条数据。");
                     if (object.size()==0){

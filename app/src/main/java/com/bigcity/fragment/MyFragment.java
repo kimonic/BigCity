@@ -1,9 +1,6 @@
 package com.bigcity.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,14 +9,13 @@ import com.bigcity.R;
 import com.bigcity.adapter.CommonLVAdapter;
 import com.bigcity.base.BaseFragment;
 import com.bigcity.bean.CommonBean;
-import com.bigcity.ui.MTopBarView;
+import com.bigcity.utils.HeightUtils;
 import com.bigcity.utils.ImageGlideUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
@@ -87,6 +83,7 @@ public class MyFragment extends BaseFragment {
         ImageGlideUtils.loadCircularImage(ivFragMyIcon, R.drawable.act_my_icon);
         CommonLVAdapter adapter=new CommonLVAdapter(getActivity(),list);
         lvFragMy.setAdapter(adapter);
+//        HeightUtils.setListviewHeight(lvFragMy);
     }
 
     @Override
@@ -104,17 +101,5 @@ public class MyFragment extends BaseFragment {
 
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
 }

@@ -133,11 +133,8 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     public void initListener() {
-        vpActHome.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        vpActHome.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
 
-            }
 
             @Override
             public void onPageSelected(int position) {
@@ -163,19 +160,19 @@ public class HomeActivity extends BaseActivity {
                         setButtonStyle(3);
                         break;
                 }
-
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
             }
         });
         llActHome1.setOnClickListener(this);
         llActHome2.setOnClickListener(this);
         llActHome3.setOnClickListener(this);
         llActHome4.setOnClickListener(this);
+
+        mtbActHome.getLeftTV().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeActivity();
+            }
+        });
 
     }
 
