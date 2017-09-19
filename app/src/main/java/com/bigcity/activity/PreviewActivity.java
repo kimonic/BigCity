@@ -9,8 +9,6 @@ import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
 import com.bigcity.bombtest.BombTestActivity;
 import com.bigcity.datamanage.BlogBmobBeanAddActivity;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
 
 import butterknife.BindView;
 import cn.sharesdk.onekeyshare.OnekeyShare;
@@ -86,11 +84,6 @@ public class PreviewActivity extends BaseActivity {
                 openActivity(RelatedMeActivity.class);
                 break;
             case R.id.bt_act_preview8:
-                PushAgent mPushAgent = PushAgent.getInstance(this);
-                //注册推送服务，每次调用register方法都会回调该接口
-
-                Log.e("TAG", "onSuccess:-------onF4545re--??- " + mPushAgent.getRegistrationId());
-                Log.e("TAG", "onSuccess:-------onF4545re--- dsdsd");
                 break;
             case R.id.bt_act_preview9:
                 showShare();

@@ -12,8 +12,6 @@ import com.lzy.okgo.https.HttpsUtils;
 import com.lzy.okgo.interceptor.HttpLoggingInterceptor;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpParams;
-import com.umeng.message.IUmengRegisterCallback;
-import com.umeng.message.PushAgent;
 
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -46,24 +44,6 @@ public class MApp extends Application{
         //Bmob.initialize(this, "Your Application ID","bmob");
 
 
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-//注册推送服务，每次调用register方法都会回调该接口
-        mPushAgent.register(new IUmengRegisterCallback() {
-
-            @Override
-            public void onSuccess(String deviceToken) {
-                Log.e("TAG", "onSuccess:---------- "+deviceToken );
-                //注册成功会返回device token
-            }
-
-            @Override
-            public void onFailure(String s, String s1) {
-                Log.e("TAG", "onSuccess:-------onFailure--- " );
-
-            }
-        });
-        Log.e("TAG", "onSuccess:-------onF4545re--- " + mPushAgent.getRegistrationId());
-        Log.e("TAG", "onSuccess:-------onF4545re--- dsdsd" );
 
 
 

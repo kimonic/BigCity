@@ -320,7 +320,11 @@ public class HomeChildFragment extends BaseFragment {
     private void getItemInfo() {
         //50-30*2=-10
         Log.e("TAG", "onRefresh: 下拉刷新4");
-        if (totalItem - 30 * itemNum > 0) {//当前日期未查询完时
+        Log.e("TAG", "onRefresh: 上拉加载6"+itemNum);
+        Log.e("TAG", "onRefresh: 上拉加载6"+dateNum);
+        if (totalItem - 30 * itemNum > 0&&dateNum<collection.length) {//当前日期未查询完时
+            Log.e("TAG", "onRefresh: 上拉加载1");
+
             BmobQuery<BlogBmobBean> query = new BmobQuery<>();
             query.addWhereEqualTo("type", "" + type);//类型
             query.addWhereEqualTo("releaseTimeDate", collection[dateNum]);//发布日期
@@ -353,13 +357,20 @@ public class HomeChildFragment extends BaseFragment {
                 }
             });
         } else {
+            Log.e("TAG", "onRefresh: 上拉加载2");
             itemNum = 0;
-            if (dateNum+1 < collection.length) {
-                dateNum++;
+            dateNum++;
+            if (dateNum< collection.length) {
+                Log.e("TAG", "onRefresh: 上拉加载3");
                 getTotalItem(collection[dateNum]);
             } else {
+                Log.e("TAG", "onRefresh: 上拉加载4");
                 finishRL();//终止刷新
             }
+
+            Log.e("TAG", "onRefresh: 上拉加载5"+itemNum);
+            Log.e("TAG", "onRefresh: 上拉加载5"+dateNum);
+
 
             // TODO: 2017/9/19 当前日期已展示完毕,查询前一天的信息
         }
