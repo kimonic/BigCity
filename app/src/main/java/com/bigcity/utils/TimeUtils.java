@@ -262,6 +262,25 @@ public class TimeUtils {
         }
     }
 
+    /**获取当前月的上一个月*/
+    public static String getLastMonth(String  currentMonth){
+        if (StringUtils.string2Integer(currentMonth)==1){
+            return ""+12;
+        }else {
+            return ""+(StringUtils.string2Integer(currentMonth)-1);
+        }
+    }
+
+
+    /**获取当前月的上一个月所在的年份*/
+    public static  String getYearOfLastMonth(String currentYear,String currentMonth){
+        if (StringUtils.string2Integer(currentMonth)==1){
+            return ""+(StringUtils.string2Integer(currentYear)-1);
+        }else {
+            return  ""+StringUtils.string2Integer(currentYear);
+        }
+    }
+
     /**获取当前月的上一个月所在的年份*/
     public static  int getYearOfLastMonth(int currentYear,int currentMonth){
         if (currentMonth==1){

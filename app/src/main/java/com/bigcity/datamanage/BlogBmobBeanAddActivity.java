@@ -106,6 +106,12 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
     private AlertDialog dialog;
     private String id;
 
+    /**添加的数据归类*/
+    private  int  type;
+    private  String  pageName;
+
+    private int  dateId;
+
     @Override
     public int getLayoutResId() {
         return R.layout.act_addblogbmobbean;
@@ -172,27 +178,40 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
         }
         id = StringUtils.getSoleId();
         //---------列表内容添加-------------------
-        addListInfo();
+        type=StringUtils.string2Integer(etType.getText().toString().trim());
+        getPageName();
+        if (pageName!=null){//分类不为空
+            addDateSearch();
+        }else {
+            ToastUtils.showToast(BlogBmobBeanAddActivity.this, R.string.qingtianjiazhengquedfl);
+        }
+
         //------------------------------分页用表数据创建--------------------------------------------
         //------------------------------分页用表数据创建--------------------------------------------
     }
     /**添加列表内容*/
     private void addListInfo() {
+
+
+
         BlogBmobBean bean = new BlogBmobBean();
         bean.setIconUrl(etIconUrl.getText().toString().trim());
         bean.setContent(etContent.getText().toString().trim());
         bean.setTitle(etTitle.getText().toString().trim());
+
         bean.setImageUrl1(etImageUrl1.getText().toString().trim());
         bean.setImageUrl2(etImageUrl2.getText().toString().trim());
         bean.setImageUrl3(etImageUrl3.getText().toString().trim());
+
         bean.setReplyCount(etImageReplyCount.getText().toString().trim());
         bean.setPreviewCount(etImagePriviewCount.getText().toString().trim());
         bean.setType(etType.getText().toString().trim());
+
         bean.setReleaseTimeDate(TimeUtils.getStringDateShortN());
         bean.setReleaseTimeHour(TimeUtils.getCurentTimeN());
         bean.setId(id);
 
-        bean.setDateId(StringUtils.string2Integer(etDateId.getText().toString().trim()));
+        bean.setDateId(dateId);
 
 
         bean.save(new SaveListener<String>() {
@@ -222,7 +241,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
 
         DateSearchBmobBean bean2 = new DateSearchBmobBean();
         bean2.setHasBlog("1");
-        bean2.setName("home");
+        bean2.setName(pageName);
         bean2.setYear(TimeUtils.getCurrentYearStr());
         bean2.setMonth(TimeUtils.getCurrentMonthStr());
         bean2.setYsdCollection(TimeUtils.getStringDateShortN());
@@ -232,7 +251,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                 if (e == null) {
                     //数据保存成功
                     //------------------添加分页内容-----------
-                    addPageInfo();
+                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "数据保存成功!");
 
                 } else {
                     dialog.dismiss();
@@ -246,7 +265,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
     private void addPageInfo() {
         BmobQuery<DateSearchBmobBean> query = new BmobQuery<>();
         //查询playerName叫“比目”的数据
-        query.addWhereEqualTo("name", "home");
+        query.addWhereEqualTo("name", pageName);
         query.addWhereEqualTo("year", TimeUtils.getCurrentYearStr());
         query.addWhereEqualTo("month", TimeUtils.getCurrentMonthStr());
         //返回50条数据，如果不加上这条语句，默认返回10条数据
@@ -261,7 +280,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                         //无查询数据--新建
                         DateSearchBmobBean bean2 = new DateSearchBmobBean();
                         bean2.setHasBlog("1");
-                        bean2.setName("home");
+                        bean2.setName(pageName);
                         bean2.setYear(TimeUtils.getCurrentYearStr());
                         bean2.setMonth(TimeUtils.getCurrentMonthStr());
                         bean2.setYsdCollection(TimeUtils.getStringDateShortN());
@@ -274,7 +293,8 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
 //                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "保存成功:");
 
                                     //-----------------------添加日期查找----------------
-                                    addDateSearch();
+                                    addListInfo();
+
                                 } else {
                                     dialog.dismiss();
                                     //数据保存失败
@@ -293,7 +313,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                                 public void done(BmobException e) {
                                     if (e == null) {
                                         //-----------------------添加日期查找----------------
-                                        addDateSearch();
+                                        addListInfo();
                                     } else {
                                         dialog.dismiss();
                                         ToastUtils.showToast(BlogBmobBeanAddActivity.this, "更新失败：" + e.getMessage());
@@ -301,7 +321,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                                 }
                             });
                         }else {
-                            addDateSearch();
+                            addListInfo();
                         }
                     }
                 } else {
@@ -315,7 +335,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
     private void addDateSearch() {
         BmobQuery<PageInfoBmobBean> query1 = new BmobQuery<>();
         //查询playerName叫“比目”的数据
-        query1.addWhereEqualTo("name", "home");
+        query1.addWhereEqualTo("name", pageName);
         query1.addWhereEqualTo("date", TimeUtils.getStringDateShortN());
         query1.addWhereEqualTo("type", etType.getText().toString().trim());
         //返回50条数据，如果不加上这条语句，默认返回10条数据
@@ -329,10 +349,11 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                     if (object.size() == 0) {
                         //无查询数据
                         PageInfoBmobBean bean2 = new PageInfoBmobBean();
-                        bean2.setName("home");
+                        bean2.setName(pageName);
                         bean2.setDate(TimeUtils.getStringDateShortN());
                         bean2.setTotal(1);
                         bean2.setType(etType.getText().toString().trim());
+                        dateId=1;
 
                         bean2.save(new SaveListener<String>() {
                             @Override
@@ -340,10 +361,12 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                                 dialog.dismiss();
                                 if (e == null) {
                                     //数据保存成功
-                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "保存成功:");
+                                    addPageInfo();
+//                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "保存成功:");
                                 } else {
                                     //数据保存失败
-                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "保存成功:");
+                                    dialog.dismiss();
+                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "保存失败:");
                                 }
                             }
                         });
@@ -352,13 +375,16 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
                         //有查询数据
                         PageInfoBmobBean bean2 = object.get(0);
                         bean2.setTotal(1 + bean2.getTotal());
+                        dateId=bean2.getTotal();
                         bean2.update(bean2.getObjectId(), new UpdateListener() {
                             @Override
                             public void done(BmobException e) {
                                 dialog.dismiss();
                                 if (e == null) {
-                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "更新成功:");
+                                    addPageInfo();
+//                                    ToastUtils.showToast(BlogBmobBeanAddActivity.this, "更新成功:");
                                 } else {
+                                    dialog.dismiss();
                                     ToastUtils.showToast(BlogBmobBeanAddActivity.this, "更新失败：" + e.getMessage());
                                 }
                             }
@@ -416,5 +442,23 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
 
     }
 
-
+    /**
+     * 获取当前列表的名称
+     */
+    private void getPageName() {
+        switch (type) {
+            case 1:
+                pageName = "huzhuwenda";
+                break;
+            case 2:
+                pageName = "kaixinyike";
+                break;
+            case 3:
+                pageName = "jiaojiaopengyou";
+                break;
+            case 4:
+                pageName = "jignchenggonglve";
+                break;
+        }
+    }
 }

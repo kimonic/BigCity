@@ -103,6 +103,9 @@
     <string name="cancel">取消</string>
     <string name="zaicidianjijtcbgym">再次点击将退出该页面</string>
     <string name="dangtianriqidefabuid">当天日期的发布id,从1开始</string>
+    <string name="angqianyemianmyzsxx">当前页面没有展示信息</string>
+    <string name="dangqianyemianmyyxsdxx">当前页面没有要显示的信息!</string>
+    <string name="qingtianjiazhengquedfl">请添加正确的分类</string>
 
 
 </resources>

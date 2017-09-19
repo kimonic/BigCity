@@ -19,7 +19,7 @@ import java.util.Map;
  * author：          kimonik
  * version：          1.0
  * date：            2017/7/12
- * description：SharedPreferences本地存储工具类,单例
+ * description：SharedPreferences本地存储工具类
  * history：
  * ===================================================
  */
@@ -35,19 +35,16 @@ public class SharedPreferencesUtils {
      * @param context   上下文
      * @param spName   存储的文件名
      */
-    private SharedPreferencesUtils(Context context,String spName) {
+    public SharedPreferencesUtils(Context context,String spName) {
         sp = context.getSharedPreferences(spName, Context.MODE_PRIVATE);
         editor = sp.edit();
         editor.apply();
     }
 
 
-    public static synchronized SharedPreferencesUtils getInstance(Context context,String spName){
-        if (spUtils==null){
-            spUtils=new SharedPreferencesUtils(context,spName);
-        }
-        return spUtils;
-    }
+//    public static synchronized SharedPreferencesUtils getInstance(Context context,String spName){
+//        return new SharedPreferencesUtils(context,spName);
+//    }
 
     /**
      * SP中写入String类型value
