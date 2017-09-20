@@ -79,12 +79,12 @@ public class RegisterActivity extends BaseActivity {
                 closeActivity();
                 break;
             case R.id.ll_act_register_man://性别男
-                llMan.setBackgroundColor(Color.RED);
+                llMan.setBackgroundColor(Color.WHITE);
                 llWoman.setBackgroundColor(Color.TRANSPARENT);
                 sex = "男";
                 break;
             case R.id.ll_act_register_woman://性别女
-                llWoman.setBackgroundColor(Color.RED);
+                llWoman.setBackgroundColor(Color.WHITE);
                 llMan.setBackgroundColor(Color.TRANSPARENT);
                 sex = "女";
                 break;
@@ -120,6 +120,9 @@ public class RegisterActivity extends BaseActivity {
         bean.setState("1");
         bean.setRegisterTime(TimeUtils.getNowDateAll());
 
+        bean.setEndLoginTime(TimeUtils.getNowDateAll());
+        bean.setIconUrl("");
+
 
 
         bean.save(new SaveListener<String>() {
@@ -127,7 +130,8 @@ public class RegisterActivity extends BaseActivity {
             public void done(String objectId, BmobException e) {
                 if (e == null) {
                     ToastUtils.showToast(RegisterActivity.this, "注册成功");
-                    openActivity(HomeActivity.class);
+                    openActivity(LoginActivity.class);
+                    closeActivity();
                 } else {
                     ToastUtils.showToast(RegisterActivity.this, "注册失败,请重试");
                 }
@@ -216,7 +220,7 @@ public class RegisterActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 }

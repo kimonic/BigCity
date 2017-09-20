@@ -28,19 +28,83 @@ public class LoginInfoBmobBean extends BmobObject {
     /**性别*/
     private String  sex;
     /**年龄*/
-    private String  age;
+    private String  age="0";
     /**手机号码*/
-    private String  phoneNumber;
+    private String  phoneNumber="";
     /**邮箱*/
-    private String  email;
+    private String  email="";
     /**是否验证邮箱*/
-    private String  emailCheck;
+    private String  emailCheck="0";
     /**是否验证手机*/
-    private String   phoneCheck;
+    private String   phoneCheck="0";
     /**用户登陆状态*/
     private String  state;
     /**注册时间*/
     private String registerTime;
+
+
+    /**最后登陆时间*/
+    private String  endLoginTime;
+    /**发帖总数*/
+    private  String  totalTopics="0";
+    /**回复总数*/
+    private  String  totalReply="0";
+    /**个人签名*/
+    private  String  selfIntroduction="";
+    /**头像url*/
+    private  String  iconUrl;
+
+
+    /**发表的贴子的唯一标识id集合,以","分隔*/
+    private  String  idCollection;
+
+    public String getIdCollection() {
+        return idCollection;
+    }
+
+    public void setIdCollection(String idCollection) {
+        this.idCollection = idCollection;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
+    }
+
+    public String getEndLoginTime() {
+        return endLoginTime;
+    }
+
+    public void setEndLoginTime(String endLoginTime) {
+        this.endLoginTime = endLoginTime;
+    }
+
+    public String getTotalTopics() {
+        return totalTopics;
+    }
+
+    public void setTotalTopics(String totalTopics) {
+        this.totalTopics = totalTopics;
+    }
+
+    public String getTotalReply() {
+        return totalReply;
+    }
+
+    public void setTotalReply(String totalReply) {
+        this.totalReply = totalReply;
+    }
+
+    public String getSelfIntroduction() {
+        return selfIntroduction;
+    }
+
+    public void setSelfIntroduction(String selfIntroduction) {
+        this.selfIntroduction = selfIntroduction;
+    }
 
     public String getPhoneBrand() {
         return phoneBrand;

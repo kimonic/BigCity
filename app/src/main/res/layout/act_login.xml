@@ -66,8 +66,8 @@
             android:textSize="16sp"
             android:theme="@style/MyEditText"
             android:hint="@string/act_login_usernamehint"
-            android:textColor="@color/act_login_etwhite"
-            android:textColorHint="@color/act_login_etwhite"
+            android:textColor="@color/color_white"
+            android:textColorHint="@color/color_white"
             />
     </LinearLayout>
     <LinearLayout
@@ -97,8 +97,8 @@
             android:textSize="16sp"
             android:theme="@style/MyEditText"
             android:hint="@string/act_login_passwordhint"
-            android:textColor="@color/act_login_etwhite"
-            android:textColorHint="@color/act_login_etwhite"
+            android:textColor="@color/color_white"
+            android:textColorHint="@color/color_white"
             />
     </LinearLayout>
 

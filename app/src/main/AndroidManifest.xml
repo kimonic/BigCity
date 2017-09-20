@@ -140,6 +140,10 @@
         <activity android:name=".bombtest.BombTestActivity" />
         <!--BlogBmobBean数据库添加activity-->
         <activity android:name=".datamanage.BlogBmobBeanAddActivity" />
+        <!--不跳转直接结束的登陆页activity-->
+        <activity android:name=".activity.LoginActivityC" />
+        <!--发布贴子的activity-->
+        <activity android:name=".activity.PublishedTopicsActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

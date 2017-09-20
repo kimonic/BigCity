@@ -2,12 +2,10 @@ package com.bigcity.fragment;
 
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
 import com.bigcity.R;
-import com.bigcity.adapter.CommonLVAdapter;
 import com.bigcity.adapter.HomeChildFragLvAdapter;
 import com.bigcity.base.BaseFragment;
 import com.bigcity.bean.CommonBean;
@@ -19,7 +17,6 @@ import com.bigcity.utils.SharedPreferencesUtils;
 import com.bigcity.utils.StringUtils;
 import com.bigcity.utils.TimeUtils;
 import com.bigcity.utils.ToastUtils;
-import com.mob.tools.MobLog;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -90,6 +87,8 @@ public class HomeChildFragment extends BaseFragment {
      */
     private String[] collection;
     private HomeChildFragLvAdapter adapter;
+    private String yearM;
+    private String monthM;
 
 
     @Override
@@ -114,6 +113,9 @@ public class HomeChildFragment extends BaseFragment {
 
         listBlog = new ArrayList<>();
 
+        yearM = TimeUtils.getCurrentYearStr();
+        monthM = TimeUtils.getCurrentMonthStr();
+
     }
 
     @Override
@@ -124,6 +126,7 @@ public class HomeChildFragment extends BaseFragment {
         srl.setPrimaryColorsId(R.color.themeColor);
         srl.setRefreshHeader(new MaterialHeader(getActivity()).setShowBezierWave(true));
         srl.setRefreshFooter(new BallPulseFooter(getActivity()));
+        srl.setEnableAutoLoadmore(false);
     }
 
     @Override
@@ -132,13 +135,12 @@ public class HomeChildFragment extends BaseFragment {
         srl.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                Log.e("TAG", "onRefresh: 下拉刷新1");
                 itemNum = 0;
                 dateNum = 0;
                 listBlog.clear();
-                String year = TimeUtils.getCurrentYearStr();
-                String month = TimeUtils.getCurrentMonthStr();
-                getDateInfo(year, month);
+                yearM = TimeUtils.getCurrentYearStr();
+                monthM = TimeUtils.getCurrentMonthStr();
+                getDateInfo(yearM, monthM);
             }
         });
         //上拉加载
@@ -178,8 +180,7 @@ public class HomeChildFragment extends BaseFragment {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
-        Log.e("TAG", "onRefresh: 下拉刷新5");
+    public void loadInternetDataToUi() {
         if (adapter == null) {
             adapter = new HomeChildFragLvAdapter(getActivity(), listBlog);
             lvFragHomeChild.setAdapter(adapter);
@@ -230,7 +231,6 @@ public class HomeChildFragment extends BaseFragment {
      */
 
     private void getDateInfo(String year, String month) {
-        Log.e("TAG", "onRefresh: 下拉刷新2");
         final String y = year;
         final String m = month;
         //当前未查询过进行查询
@@ -246,8 +246,17 @@ public class HomeChildFragment extends BaseFragment {
                 if (e == null) {
                     if (object.size() == 0) {
                         //无查询数据
-                        dialog.dismiss();
-                        ToastUtils.showToast(getActivity(), R.string.dangqianyemianmyyxsdxx);
+                        if (!(StringUtils.string2Integer(yearM) < 2017)) {
+                            yearM=TimeUtils.getYearOfLastMonth(yearM,monthM);
+                            monthM=TimeUtils.getLastMonth(monthM);
+                            getDateInfo(yearM, monthM);
+                        }else {
+                            dialog.dismiss();
+                            finishRL();
+                            ToastUtils.showToast(getActivity(), R.string.dangqianyemianmyyxsdxx);
+                        }
+
+
                     } else {
                         //有查询数据,保存查询数据的日期集合到本地
                         DateSearchBmobBean bean = object.get(0);
@@ -258,16 +267,20 @@ public class HomeChildFragment extends BaseFragment {
                             // TODO: 2017/9/19   具体日期的信息条数
                             getTotalItem(collection[0]);
                         } else {//查询至2017年1月是否有信息
-                            if (!(StringUtils.string2Integer(y) > 2017)) {
-                                getDateInfo(TimeUtils.getYearOfLastMonth(y, m), TimeUtils.getLastMonth(m));
-                            } else {
+                            if (!(StringUtils.string2Integer(yearM) < 2017)) {
+                                yearM=TimeUtils.getYearOfLastMonth(yearM,monthM);
+                                monthM=TimeUtils.getLastMonth(monthM);
+                                getDateInfo(yearM, monthM);
+                            }else {
                                 dialog.dismiss();
+                                finishRL();
                                 ToastUtils.showToast(getActivity(), R.string.dangqianyemianmyyxsdxx);
                             }
                         }
                     }
                 } else {
                     dialog.dismiss();
+                    finishRL();
                     ToastUtils.showToast(getActivity(), "查询失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
@@ -281,7 +294,6 @@ public class HomeChildFragment extends BaseFragment {
      * 获取当前页面当前日期的的总item数
      */
     public void getTotalItem(String date) {
-        Log.e("TAG", "onRefresh: 下拉刷新3");
 
         BmobQuery<PageInfoBmobBean> query = new BmobQuery<>();
         //查询playerName叫“比目”的数据
@@ -319,8 +331,7 @@ public class HomeChildFragment extends BaseFragment {
      */
     private void getItemInfo() {
         //50-30*2=-10
-        Log.e("TAG", "onRefresh: 下拉刷新4");
-        if (totalItem - 30 * itemNum > 0) {//当前日期未查询完时
+        if (totalItem - 30 * itemNum > 0 && dateNum < collection.length) {//当前日期未查询完时
             BmobQuery<BlogBmobBean> query = new BmobQuery<>();
             query.addWhereEqualTo("type", "" + type);//类型
             query.addWhereEqualTo("releaseTimeDate", collection[dateNum]);//发布日期
@@ -338,9 +349,8 @@ public class HomeChildFragment extends BaseFragment {
                         if (object.size() != 0) {
                             //有查询数据
                             listBlog.addAll(object);
-                            Log.e("TAG", "initDataFromInternet" + type + ": -------getItemInfo--------------" + listBlog.size());
 
-                            LoadInternetDataToUi();
+                            loadInternetDataToUi();
                         } else {
                             //无查询数据
                             finishRL();
@@ -354,10 +364,15 @@ public class HomeChildFragment extends BaseFragment {
             });
         } else {
             itemNum = 0;
-            if (dateNum+1 < collection.length) {
-                dateNum++;
+            dateNum++;
+            if (dateNum < collection.length) {
                 getTotalItem(collection[dateNum]);
+            } else if (!(StringUtils.string2Integer(yearM) < 2017)) {
+                yearM=TimeUtils.getYearOfLastMonth(yearM,monthM);
+                monthM=TimeUtils.getLastMonth(monthM);
+                getDateInfo(yearM, monthM);
             } else {
+                ToastUtils.showToast(getActivity(), R.string.dangqianyemianmyyxsdxx);
                 finishRL();//终止刷新
             }
 

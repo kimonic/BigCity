@@ -177,7 +177,7 @@ public class BombTestActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

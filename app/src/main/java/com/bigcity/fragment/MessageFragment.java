@@ -90,7 +90,7 @@ public class MessageFragment extends BaseFragment {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

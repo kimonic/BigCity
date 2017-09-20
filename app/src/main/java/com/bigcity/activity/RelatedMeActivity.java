@@ -89,7 +89,7 @@ public class RelatedMeActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

@@ -137,7 +137,7 @@ public class PreviewActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

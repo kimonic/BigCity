@@ -82,7 +82,7 @@ public class DiscoverFragment extends BaseFragment {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

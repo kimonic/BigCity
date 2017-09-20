@@ -37,6 +37,7 @@
                 android:textColor="@color/act_my_textcolor"
                 />
             <TextView
+                android:id="@+id/tv_frag_my_sex"
                 android:layout_width="14dp"
                 android:layout_height="14dp"
                 android:background="@drawable/act_login_men"

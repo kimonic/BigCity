@@ -3,6 +3,7 @@ package com.bigcity.activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,12 +11,15 @@ import android.widget.TextView;
 import com.bigcity.R;
 import com.bigcity.adapter.HomeFragVPAdapter;
 import com.bigcity.base.BaseActivity;
+import com.bigcity.bean.bmobbean.LoginInfoBmobBean;
 import com.bigcity.fragment.DiscoverFragment;
 import com.bigcity.fragment.HomeFragment;
 import com.bigcity.fragment.MessageFragment;
 import com.bigcity.fragment.MyFragment;
 import com.bigcity.ui.MTopBarView;
 import com.bigcity.utils.ScreenSizeUtils;
+import com.bigcity.utils.SharedPreferencesUtils;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -173,6 +177,12 @@ public class HomeActivity extends BaseActivity {
                 closeActivity();
             }
         });
+        mtbActHome.getRightTV().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openActivity(PublishedTopicsActivity.class);
+            }
+        });
 
     }
 
@@ -182,7 +192,7 @@ public class HomeActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

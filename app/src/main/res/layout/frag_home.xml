@@ -15,10 +15,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/color_white"
             android:gravity="center"
             android:text="@string/frag_home_huzhuwenda"
             android:textColor="@color/act_login_etwhite"
-            android:background="@color/color_red"
             android:textSize="18sp" />
 
         <TextView
@@ -28,7 +28,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/frag_home_kaixinyike"
-            android:textColor="@color/act_login_etwhite"
+            android:textColor="@color/color_white"
             android:textSize="18sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/frag_home_jiaojiaopengyou"
-            android:textColor="@color/act_login_etwhite"
+            android:textColor="@color/color_white"
             android:textSize="18sp" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/frag_home_jingchenggonglve"
-            android:textColor="@color/act_login_etwhite"
+            android:textColor="@color/color_white"
             android:textSize="18sp" />
     </LinearLayout>
 

@@ -23,15 +23,15 @@ public class BlogBmobBean extends BmobObject {
     /**先期展示内容*/
     private  String   content;
     /**配图1*/
-    private String  imageUrl1;
+    private String  imageUrl1="";
     /**配图2*/
-    private String  imageUrl2;
+    private String  imageUrl2="";
     /**配图3*/
-    private String  imageUrl3;
+    private String  imageUrl3="";
     /**浏览次数*/
-    private String  previewCount;
+    private String  previewCount="0";
     /**回复次数*/
-    private String  replyCount;
+    private String  replyCount="0";
     /**适用类型*/
     private String type;
     /**发布时间,年月日----分页查询条件*/

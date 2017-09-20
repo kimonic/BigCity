@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.bigcity.ui.MTopBarView
+        android:id="@+id/mtb_act_publishedtopics"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/themeColor"
+        app:centerText="@string/woyouhuayaoshuo"
+        app:leftImage="@drawable/ic_arrowback"
+        app:rightImage="@drawable/act_publishedtopics_plan" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/bankuai"
+            android:textColor="@color/color_black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/tv_act_publishedtopics_huzhuwenda"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/xshape_rounrect_grayborder2"
+            android:gravity="center"
+            android:text="@string/frag_home_huzhuwenda"
+            android:textColor="@color/color_white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_act_publishedtopics_kaixinyike"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:layout_weight="1"
+            android:background="@drawable/xshape_rounrect_grayborder1"
+            android:gravity="center"
+            android:text="@string/frag_home_kaixinyike"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_act_publishedtopics_jiaojiaopengyou"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:background="@drawable/xshape_rounrect_grayborder1"
+            android:gravity="center"
+            android:text="@string/frag_home_jiaojiaopengyou"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_act_publishedtopics_jignchenggonglve"
+            android:layout_width="0dp"
+            android:layout_height="26dp"
+            android:layout_weight="1"
+            android:background="@drawable/xshape_rounrect_grayborder1"
+            android:gravity="center"
+            android:text="@string/frag_home_jingchenggonglve"
+            android:textColor="@color/color_black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_act_publishedtopics_title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:hint="@string/qingshuruninybddzt"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/color_black"
+        android:textColorHint="@color/color_gray"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_act_publishedtopics_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:background="@null"
+        android:gravity="top|start"
+        android:hint="@string/zaizhelichangsyyb"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textColor="@color/color_black"
+        android:textColorHint="@color/color_gray"
+        android:textSize="14sp" />
+
+
+</LinearLayout>

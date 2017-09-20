@@ -1,6 +1,5 @@
 package com.bigcity.activity;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -24,17 +23,17 @@ import cn.bmob.v3.listener.FindListener;
 
 /**
  * * ================================================
- * name:            LoginActivity
+ * name:            LoginActivityC
  * guide:
  * author：          kimonik
  * version：          1.0
  * date：            2017/7/18
- * description：登陆界面activity,跳转主页
+ * description：登陆界面activity,不跳转直接结束
  * history：
  * ===================================================
  */
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivityC extends BaseActivity {
     @BindView(R.id.lv_act_login)
     LinearLayout lvActLogin;
     @BindView(R.id.tv_act_login_close)
@@ -86,19 +85,18 @@ public class LoginActivity extends BaseActivity {
                 if (e == null) {
                     //                    ToastUtils.showToast(RegisterActivity.this, "查询成功：共" + object.size() + "条数据。");
                     if (object.size() == 0) {
-                        ToastUtils.showToast(LoginActivity.this, "用户名或密码错误,请重新输入!");
+                        ToastUtils.showToast(LoginActivityC.this, "用户名或密码错误,请重新输入!");
                         //无查询数据
                     } else {
                         //有查询数据
                         Gson gson = new Gson();
                         sp.put("loginInfo",gson.toJson(object.get(0), LoginInfoBmobBean.class));
                         sp.put("date", TimeUtils.getStringDateShortN());
-                        ToastUtils.showToast(LoginActivity.this, "登陆成功!");
-                        openActivity(HomeActivity.class);
+                        ToastUtils.showToast(LoginActivityC.this, "登陆成功!");
                         closeActivity();
                     }
                 } else {
-                    ToastUtils.showToast(LoginActivity.this, "登陆失败：" + e.getMessage() + "," + e.getErrorCode());
+                    ToastUtils.showToast(LoginActivityC.this, "登陆失败：" + e.getMessage() + "," + e.getErrorCode());
                 }
             }
         });

@@ -248,13 +248,13 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
         bean1.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
+                dialog.dismiss();
                 if (e == null) {
                     //数据保存成功
                     //------------------添加分页内容-----------
                     ToastUtils.showToast(BlogBmobBeanAddActivity.this, "数据保存成功!");
 
                 } else {
-                    dialog.dismiss();
                     //数据保存失败
                     ToastUtils.showToast(BlogBmobBeanAddActivity.this, "数据保存失败!");
                 }
@@ -438,7 +438,7 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

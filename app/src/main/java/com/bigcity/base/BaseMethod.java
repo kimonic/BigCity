@@ -29,7 +29,7 @@ public interface BaseMethod {
     void initDataFromInternet();
 
     /** 加载网络数据到ui界面*/
-    void LoadInternetDataToUi();
+    void loadInternetDataToUi();
 
 
 

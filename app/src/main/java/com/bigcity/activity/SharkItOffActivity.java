@@ -153,7 +153,7 @@ public class SharkItOffActivity extends BaseActivity implements SensorEventListe
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 

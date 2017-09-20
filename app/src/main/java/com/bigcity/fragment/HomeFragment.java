@@ -141,13 +141,16 @@ public class HomeFragment extends BaseFragment {
 
     }
 
+    @SuppressWarnings("deprecation")
     private void setBtnStyle(int position) {
 
         for (int i = 0; i < listTv.size(); i++) {
             if (i == position) {
-                listTv.get(i).setBackgroundColor(Color.RED);
+                listTv.get(i).setBackgroundColor(getResources().getColor(R.color.color_white));
+                listTv.get(i).setTextColor(getResources().getColor(R.color.act_login_etwhite));
             } else {
                 listTv.get(i).setBackgroundColor(Color.TRANSPARENT);
+                listTv.get(i).setTextColor(getResources().getColor(R.color.color_white));
             }
         }
 
@@ -159,7 +162,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     @Override
-    public void LoadInternetDataToUi() {
+    public void loadInternetDataToUi() {
 
     }
 
