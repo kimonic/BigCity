@@ -126,7 +126,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
-        android:textColor="@color/act_login_etwhite"
+        android:textColor="@color/color_white"
         />
 
 </LinearLayout>

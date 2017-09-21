@@ -188,6 +188,17 @@ public class MyFragment extends BaseFragment {
 
 
     }
+
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if(isVisibleToUser){
+            //TODO now it's visible to user
+        } else {
+            //TODO now it's invisible to user
+        }
+    }
     /**
      * String picPath = "sdcard/temp.jpg";
      BmobFile bmobFile = new BmobFile(new File(picPath));
