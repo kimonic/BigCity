@@ -144,6 +144,10 @@
         <activity android:name=".activity.LoginActivityC" />
         <!--发布贴子的activity-->
         <activity android:name=".activity.PublishedTopicsActivity" />
+        <!--全屏展示图片activity-->
+        <activity android:name=".activity.ShowImageActivity" />
+        <!--在bmob上添加新的数据表activity-->
+        <activity android:name=".activity.AddDataListActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

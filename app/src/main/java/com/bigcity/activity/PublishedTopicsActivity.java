@@ -1,11 +1,20 @@
 package com.bigcity.activity;
 
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,7 +25,9 @@ import com.bigcity.bean.bmobbean.BlogDetailsBmobBean;
 import com.bigcity.bean.bmobbean.DateSearchBmobBean;
 import com.bigcity.bean.bmobbean.LoginInfoBmobBean;
 import com.bigcity.bean.bmobbean.PageInfoBmobBean;
+import com.bigcity.bean.bmobbean.TotalItemNumBmobBean;
 import com.bigcity.ui.MTopBarView;
+import com.bigcity.utils.BitmapUtils;
 import com.bigcity.utils.DialogUtils;
 import com.bigcity.utils.ScreenSizeUtils;
 import com.bigcity.utils.SharedPreferencesUtils;
@@ -24,16 +35,24 @@ import com.bigcity.utils.StringUtils;
 import com.bigcity.utils.TimeUtils;
 import com.bigcity.utils.ToastUtils;
 import com.google.gson.Gson;
+import com.mob.tools.MobLog;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.DeleteBatchListener;
 import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.SaveListener;
 import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 /**
  * * ===============================================================
@@ -62,6 +81,18 @@ public class PublishedTopicsActivity extends BaseActivity {
     EditText etTitle;
     @BindView(R.id.et_act_publishedtopics_content)
     EditText etContent;
+    @BindView(R.id.tv_act_publishedtopics_image1)
+    TextView tvImage1;
+    @BindView(R.id.iv_act_publishedtopics_image_url1)
+    ImageView ivImageUrl1;
+    @BindView(R.id.tv_act_publishedtopics_image2)
+    TextView tvImage2;
+    @BindView(R.id.iv_act_publishedtopics_image_url2)
+    ImageView ivImageUrl2;
+    @BindView(R.id.tv_act_publishedtopics_image3)
+    TextView tvImage3;
+    @BindView(R.id.iv_act_publishedtopics_image_url3)
+    ImageView ivImageUrl3;
 
     private List<TextView> listTv;
 
@@ -92,6 +123,30 @@ public class PublishedTopicsActivity extends BaseActivity {
      */
     private LoginInfoBmobBean bean;
 
+    private String imageUrl1, imageUrl2, imageUrl3;
+    private String imageBmobUrl1 = "", imageBmobUrl2 = "", imageBmobUrl3 = "";
+    private File file1, file2, file3;
+    private boolean success1 = false, success2 = false, success3 = false;
+
+    /**
+     * 判断已成功上传哪些图片
+     */
+    private int upCount = 0;
+
+    /**
+     * 压缩后的图片文件集合
+     */
+    private List<File> listFile;
+
+    /**
+     * 已上传图片的集合
+     */
+    private List<String> listBmobUrl;
+    /**
+     * 当前类型下item的总数
+     */
+    private int itemTotal = 0;
+
     @Override
     public int getLayoutResId() {
         return R.layout.act_publishedtopics;
@@ -112,24 +167,214 @@ public class PublishedTopicsActivity extends BaseActivity {
             case R.id.tv_act_publishedtopics_jignchenggonglve://京城攻略
                 setBtnStytle(3);
                 break;
-//            case R.id.: break;
-//            case R.id.: break;
+            case R.id.tv_act_publishedtopics_image1://选择图片1
+                selectImage(7);
+                break;
+            case R.id.tv_act_publishedtopics_image2://选择图片2
+                selectImage(8);
+                break;
+            case R.id.tv_act_publishedtopics_image3://选择图片3
+                selectImage(9);
+                break;
+            case R.id.iv_act_publishedtopics_image_url1:
+                Intent intent = new Intent(this, ShowImageActivity.class);
+                intent.putExtra("url", imageUrl1);
+                startActivity(intent);
+                break;
+            case R.id.iv_act_publishedtopics_image_url2:
+                Intent intent2 = new Intent(this, ShowImageActivity.class);
+                intent2.putExtra("url", imageUrl2);
+                startActivity(intent2);
+                break;
+            case R.id.iv_act_publishedtopics_image_url3:
+                Intent intent3 = new Intent(this, ShowImageActivity.class);
+                intent3.putExtra("url", imageUrl3);
+                startActivity(intent3);
+                break;
         }
 
     }
 
-    private void setBtnStytle(int positon) {
-        type = positon + 1;
-        for (int i = 0; i < listTv.size(); i++) {
-            if (positon == i) {
-                listTv.get(i).setTextColor(Color.WHITE);
-                listTv.get(i).setBackgroundResource(R.drawable.xshape_rounrect_grayborder2);
-            } else {
-                listTv.get(i).setTextColor(Color.BLACK);
-                listTv.get(i).setBackgroundResource(R.drawable.xshape_rounrect_grayborder1);
+    /**
+     * 选择图片
+     */
+    private void selectImage(int requestCode) {
+        Intent albumIntent = new Intent(Intent.ACTION_PICK, null);
+        albumIntent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+        startActivityForResult(albumIntent, requestCode);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {//继续检查结果,知道含有登陆信息
+            checkLogin();
+        } else if (data != null) {
+            //遗留问题:小米4手机中,一旦点击图片则返回本activity,无法点击相册中的确定
+            ContentResolver resolver = getContentResolver();
+            try {
+                InputStream inputStream = resolver.openInputStream(data.getData());
+                String temp = data.getData().toString();
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                File file = BitmapUtils.compressImage(bitmap);//生成文件
+                listFile.add(file);
+
+                int density = ScreenSizeUtils.getDensity(this);
+
+                switch (requestCode) {
+                    case 7:
+                        ivImageUrl1.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                        imageUrl1 = temp;
+                        file1 = file;
+                        break;
+                    case 8:
+                        ivImageUrl2.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                        imageUrl2 = temp;
+                        file2 = file;
+                        break;
+                    case 9:
+                        ivImageUrl3.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                        imageUrl3 = temp;
+                        file3 = file;
+                        break;
+                }
+
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
             }
         }
+
+
     }
+
+    /**
+     * 将 content://media/external/images/media/84类型的uri转化为实际的文件路径
+     */
+    private String changeUri(Uri uri) {
+//        String[] proj = { MediaStore.Images.Media.DATA };
+        CursorLoader cursorLoader = new CursorLoader(this, uri, null, null, null, null);
+        Cursor actualimagecursor = cursorLoader.loadInBackground();
+        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        actualimagecursor.moveToFirst();
+        return actualimagecursor.getString(actual_image_column_index);
+    }
+
+    /**
+     * 上传图片
+     *
+     * @param file     要上传的文件
+     * @param position 上传文件的位置
+     */
+    private void uploadingImage(File file, final int position) {
+        Log.e("TAG", "commitInfo: ---------uploadingImage------------提交信息3");
+
+//        String picPath = "sdcard/temp.jpg";
+        if (file != null) {
+            final BmobFile bmobFile = new BmobFile(file);
+            bmobFile.uploadblock(new UploadFileListener() {
+                @Override
+                public void done(BmobException e) {
+                    if (e == null) {
+                        //bmobFile.getFileUrl()--返回的上传文件的完整地址
+                        listBmobUrl.add(bmobFile.getFileUrl());//保存已上传图片的地址,二次提交时删除已上传图片
+                        ToastUtils.showToast(PublishedTopicsActivity.this, "上传文件成功:" + bmobFile.getFileUrl());
+                        switch (position) {
+                            case 1:
+                                success1 = true;
+                                imageBmobUrl1 = bmobFile.getFileUrl();
+                                break;
+                            case 2:
+                                success2 = true;
+                                imageBmobUrl2 = bmobFile.getFileUrl();
+                                break;
+                            case 3:
+                                success3 = true;
+                                imageBmobUrl3 = bmobFile.getFileUrl();
+                                break;
+                        }
+                        uploadingProgress();
+                        Log.e("TAG", "done: ---------------------" + bmobFile.getFileUrl());
+
+                    } else {
+                        ToastUtils.showToast(PublishedTopicsActivity.this, "上传文件失败：" + e.getMessage());
+                        Log.e("TAG", "done: ---------------------" + e.getMessage());
+                    }
+
+                }
+
+                @Override
+                public void onProgress(Integer value) {
+                    // 返回的上传进度（百分比）
+                }
+            });
+        } else {
+            uploadingProgress();
+        }
+
+
+    }
+
+    /**
+     * 一张接一张上传图片
+     */
+    private void uploadingProgress() {
+        Log.e("TAG", "commitInfo: ---------------------提交图片");
+        if (success1) {
+            Log.e("TAG", "uploadingProgress: ---------------------第一张");
+            success1 = false;
+            if (file2 != null) {
+                uploadingImage(file2, 2);
+            } else {
+                success2 = true;
+                uploadingImage(file3, 3);
+            }
+        }else if (success2) {
+            Log.e("TAG", "uploadingProgress: ---------------------第二张");
+            success2 = false;
+            if (file3 != null) {
+                uploadingImage(file3, 3);
+            } else {
+                // TODO: 2017/9/21 上传其他数据
+                addDateSearch();
+            }
+        }else  if (success3) {
+            Log.e("TAG", "uploadingProgress: ---------------------第三张");
+            success3 = false;
+            // TODO: 2017/9/21 上传其他数据
+            addDateSearch();
+        }
+
+    }
+
+    /**
+     * 批量删除文件
+     */
+    private void deleImage() {
+        //此url必须是上传文件成功之后通过bmobFile.getUrl()方法获取的。
+        String[] urls = new String[listBmobUrl.size()];
+        if (listBmobUrl.size() > 0) {
+            for (int i = 0; i < listBmobUrl.size(); i++) {
+                urls[i] = listBmobUrl.get(i);
+            }
+            BmobFile.deleteBatch(urls, new DeleteBatchListener() {
+                @Override
+                public void done(String[] failUrls, BmobException e) {
+                    if (e == null) {
+                        ToastUtils.showToast(PublishedTopicsActivity.this, "全部删除成功");
+                    } else {
+                        if (failUrls != null) {
+                            ToastUtils.showToast(PublishedTopicsActivity.this, "删除失败个数：" + failUrls.length + "," + e.toString());
+                        } else {
+                            ToastUtils.showToast(PublishedTopicsActivity.this, "全部文件删除失败：" + e.getErrorCode() + "," + e.toString());
+                        }
+                    }
+                }
+            });
+        }
+    }
+
 
     @Override
     public void initDataFromIntent() {
@@ -139,6 +384,8 @@ public class PublishedTopicsActivity extends BaseActivity {
         listTv.add(tvJiaoJiaoPengYou);
         listTv.add(tvJignChengGongLve);
 
+        listFile = new ArrayList<>();
+        listBmobUrl = new ArrayList<>();
 
         sp = new SharedPreferencesUtils(this, "loginInfo");
         checkLogin();
@@ -161,6 +408,15 @@ public class PublishedTopicsActivity extends BaseActivity {
         tvKaiXinYiKe.setOnClickListener(this);
         tvJiaoJiaoPengYou.setOnClickListener(this);
         tvJignChengGongLve.setOnClickListener(this);
+
+        tvImage1.setOnClickListener(this);
+        tvImage2.setOnClickListener(this);
+        tvImage3.setOnClickListener(this);
+
+        ivImageUrl1.setOnClickListener(this);
+        ivImageUrl2.setOnClickListener(this);
+        ivImageUrl3.setOnClickListener(this);
+
         mtb.getLeftTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,10 +446,97 @@ public class PublishedTopicsActivity extends BaseActivity {
 
         getPageName();
         if (pageName != null) {//分类不为空
-            addDateSearch();
+            queryTotal();
         } else {
             ToastUtils.showToast(this, R.string.qingtianjiazhengquedfl);
         }
+    }
+
+
+    /**
+     * 查询当前类下的总item数
+     */
+
+    private void queryTotal() {
+        Log.e("TAG", "commitInfo: ---------------------提交信息2");
+        BmobQuery<TotalItemNumBmobBean> query = new BmobQuery<>();
+        //查询playerName叫“比目”的数据
+        query.addWhereEqualTo("type", "" + type);
+        query.addWhereEqualTo("name", pageName);
+        //返回50条数据，如果不加上这条语句，默认返回10条数据
+        query.setLimit(10);
+        //执行查询方法
+        query.findObjects(new FindListener<TotalItemNumBmobBean>() {
+            @Override
+            public void done(List<TotalItemNumBmobBean> object, BmobException e) {
+                if (e == null) {
+                    if (object.size() == 0) {
+                        //无查询数据
+                        TotalItemNumBmobBean totalItemNumBmobBean = new TotalItemNumBmobBean();
+                        totalItemNumBmobBean.setName(pageName);
+                        totalItemNumBmobBean.setType("" + type);
+                        totalItemNumBmobBean.setTotal(0);
+                        totalItemNumBmobBean.save(new SaveListener<String>() {
+                            @Override
+                            public void done(String objectId, BmobException e) {
+                                if (e == null) {
+                                    //数据保存成功
+                                    itemTotal = 0;
+
+
+                                    deleImage();//删除之前上传的图片
+                                    if (file1 == null) {
+                                        success1 = true;
+                                    }
+                                    if (file2 == null) {
+                                        success2 = true;
+                                    }
+                                    if (file3 == null) {
+                                        success3 = true;
+                                    }
+
+
+                                    uploadingImage(file1, 1);
+                                } else {
+                                    //数据保存失败
+                                    dialog.dismiss();
+                                    ToastUtils.showToast(PublishedTopicsActivity.this, R.string.shujubaocunshibai);
+                                }
+                            }
+                        });
+                    } else {
+                        //有查询数据
+                        TotalItemNumBmobBean totalItemNumBmobBean = object.get(0);
+                        itemTotal = totalItemNumBmobBean.getTotal();
+                        totalItemNumBmobBean.setTotal(itemTotal + 1);
+                        totalItemNumBmobBean.update(totalItemNumBmobBean.getObjectId(), new UpdateListener() {
+                            @Override
+                            public void done(BmobException e) {
+                                if (e == null) {
+                                    deleImage();//删除之前上传的图片
+                                    if (file1 == null) {
+                                        success1 = true;
+                                    }
+                                    if (file2 == null) {
+                                        success2 = true;
+                                    }
+                                    if (file3 == null) {
+                                        success3 = true;
+                                    }
+                                    uploadingImage(file1, 1);
+                                } else {
+                                    dialog.dismiss();
+                                    ToastUtils.showToast(PublishedTopicsActivity.this, "更新失败：" + e.getMessage());
+                                }
+                            }
+                        });
+                    }
+                } else {
+                    dialog.dismiss();
+                    ToastUtils.showToast(PublishedTopicsActivity.this, "查询失败：" + e.getMessage() + "," + e.getErrorCode());
+                }
+            }
+        });
     }
 
     @Override
@@ -211,7 +554,7 @@ public class PublishedTopicsActivity extends BaseActivity {
      */
     private void addDetails() {
 
-        Log.e("TAG", "commitInfo: ---------------------提交信息5");
+        Log.e("TAG", "commitInfo: ---------------------提交信息6");
 
         BlogDetailsBmobBean bean1 = new BlogDetailsBmobBean();
 
@@ -252,7 +595,6 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 更新登陆信息
      */
     private void updateLoginInfo() {
-        Log.e("TAG", "commitInfo: ---------------------提交信息6");
         int topics = StringUtils.string2Integer(bean.getTotalReply()) + 1;
         bean.setTotalTopics("" + topics);
         bean.setIdCollection(bean.getIdCollection() + "," + id);
@@ -263,9 +605,10 @@ public class PublishedTopicsActivity extends BaseActivity {
             public void done(BmobException e) {
                 dialog.dismiss();
                 if (e == null) {
-                    ToastUtils.showToast(PublishedTopicsActivity.this, "更新成功:");
+                    ToastUtils.showToast(PublishedTopicsActivity.this, "发表成功:");
+                    closeActivity();
                 } else {
-                    ToastUtils.showToast(PublishedTopicsActivity.this, "更新失败：" + e.getMessage());
+                    ToastUtils.showToast(PublishedTopicsActivity.this, "发表失败：" + e.getMessage());
                 }
             }
 
@@ -277,58 +620,48 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 添加列表内容
      */
     private void addListInfo() {
-        Log.e("TAG", "commitInfo: ---------------------提交信息4");
+        Log.e("TAG", "commitInfo: ---------------------提交信息5");
 
-        BlogBmobBean bean = new BlogBmobBean();
+        BlogBmobBean bean3 = new BlogBmobBean();
 
-//        bean.setIconUrl(etIconUrl.getText().toString().trim());
-        bean.setIconUrl("");
-        Log.e("TAG", "commitInfo: ---------------------提交信息4?1");
+        bean3.setIconUrl(bean.getIconUrl());
 
-        if (etContent.getText().toString().trim().length()>100){
-            bean.setContent(etContent.getText().toString().trim().subSequence(0, 100).toString());//显示的简略内容
-        }else {
-            bean.setContent(etContent.getText().toString().trim());//显示的简略内容
+        if (etContent.getText().toString().trim().length() > 100) {
+            bean3.setContent(etContent.getText().toString().trim().subSequence(0, 100).toString());//显示的简略内容
+        } else {
+            bean3.setContent(etContent.getText().toString().trim());//显示的简略内容
         }
 
-        bean.setTitle(etTitle.getText().toString().trim());//标题
-        Log.e("TAG", "commitInfo: ---------------------提交信息4?2");
+        bean3.setTitle(etTitle.getText().toString().trim());//标题
 
-//        bean.setImageUrl1(etImageUrl1.getText().toString().trim());//图片1
-//        bean.setImageUrl2(etImageUrl2.getText().toString().trim());//图片2
-//        bean.setImageUrl3(etImageUrl3.getText().toString().trim());//图片3
-        bean.setImageUrl1("");//图片1
-        bean.setImageUrl2("");//图片2
-        bean.setImageUrl3("");//图片3
+        bean3.setImageUrl1(imageBmobUrl1);//图片1
+        bean3.setImageUrl2(imageBmobUrl2);//图片2
+        bean3.setImageUrl3(imageBmobUrl3);//图片3
 
-//        bean.setReplyCount(etImageReplyCount.getText().toString().trim());//回复数
-//        bean.setPreviewCount(etImagePriviewCount.getText().toString().trim());//浏览数
-        bean.setReplyCount("0");//回复数
-        bean.setPreviewCount("0");//浏览数
+        bean3.setReplyCount("0");//回复数
+        bean3.setPreviewCount("0");//浏览数
 
 
-        bean.setType("" + type);//类型
+        bean3.setType("" + type);//类型
 
-        bean.setReleaseTimeDate(TimeUtils.getStringDateShortN());
-        bean.setReleaseTimeHour(TimeUtils.getCurentTimeN());
-        bean.setId(id);
+        bean3.setReleaseTimeDate(TimeUtils.getStringDateShortN());
+        bean3.setReleaseTimeHour(TimeUtils.getCurentTimeN());
+        bean3.setId(id);
 
-        bean.setDateId(dateId);
-        Log.e("TAG", "commitInfo: ---------------------提交信息41");
+        bean3.setDateId(dateId);
 
+        bean3.setNumId(itemTotal + 1);
 
-        bean.save(new SaveListener<String>() {
+        bean3.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
                 if (e == null) {
                     //数据保存成功
                     //---------------------保存详情内容-------------------
-                    Log.e("TAG", "commitInfo: ---------------------提交信息42");
                     addDetails();
                 } else {
                     dialog.dismiss();
                     //数据保存失败
-                    Log.e("TAG", "commitInfo: ---------------------提交信息43");
                     ToastUtils.showToast(PublishedTopicsActivity.this, "数据保存失败!");
                 }
             }
@@ -340,7 +673,7 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 添加分页内容
      */
     private void addPageInfo() {
-        Log.e("TAG", "commitInfo: ---------------------提交信息3");
+        Log.e("TAG", "commitInfo: ---------------------提交信息4");
         BmobQuery<DateSearchBmobBean> query = new BmobQuery<>();
         //查询playerName叫“比目”的数据
         query.addWhereEqualTo("name", pageName);
@@ -353,7 +686,6 @@ public class PublishedTopicsActivity extends BaseActivity {
             @Override
             public void done(List<DateSearchBmobBean> object, BmobException e) {
                 if (e == null) {
-                    //                    ToastUtils.showToast(RegisterActivity.this, "查询成功：共" + object.size() + "条数据。");
                     if (object.size() == 0) {
                         //无查询数据--新建
                         DateSearchBmobBean bean2 = new DateSearchBmobBean();
@@ -362,7 +694,6 @@ public class PublishedTopicsActivity extends BaseActivity {
                         bean2.setYear(TimeUtils.getCurrentYearStr());
                         bean2.setMonth(TimeUtils.getCurrentMonthStr());
                         bean2.setYsdCollection(TimeUtils.getStringDateShortN());
-
                         bean2.save(new SaveListener<String>() {
                             @Override
                             public void done(String objectId, BmobException e) {
@@ -414,7 +745,7 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 添加日期查找
      */
     private void addDateSearch() {
-        Log.e("TAG", "commitInfo: ---------------------提交信息2");
+        Log.e("TAG", "commitInfo: ---------addDateSearch------------提交信息3");
 
         BmobQuery<PageInfoBmobBean> query1 = new BmobQuery<>();
         //查询playerName叫“比目”的数据
@@ -436,11 +767,10 @@ public class PublishedTopicsActivity extends BaseActivity {
                         bean2.setTotal(1);
                         bean2.setType("" + type);
                         dateId = 1;
-
+                        bean2.setTotalNum(itemTotal + 1);//--------------------------------------------------------------------查询前一天的总数进行操作------------------------------------------------------------
                         bean2.save(new SaveListener<String>() {
                             @Override
                             public void done(String objectId, BmobException e) {
-                                dialog.dismiss();
                                 if (e == null) {
                                     //数据保存成功
                                     addPageInfo();
@@ -457,6 +787,7 @@ public class PublishedTopicsActivity extends BaseActivity {
                         //有查询数据
                         PageInfoBmobBean bean2 = object.get(0);
                         bean2.setTotal(1 + bean2.getTotal());
+                        bean2.setTotalNum(bean2.getTotalNum() + 1);//--------------总数加1-------------------------
                         dateId = bean2.getTotal();
                         bean2.update(bean2.getObjectId(), new UpdateListener() {
                             @Override
@@ -495,7 +826,7 @@ public class PublishedTopicsActivity extends BaseActivity {
                 pageName = "jiaojiaopengyou";
                 break;
             case 4:
-                pageName = "jignchenggonglve";
+                pageName = "jingchenggonglve";
                 break;
         }
     }
@@ -546,11 +877,16 @@ public class PublishedTopicsActivity extends BaseActivity {
         }
     }
 
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == 1) {//继续检查结果,知道含有登陆信息
-            checkLogin();
+    private void setBtnStytle(int positon) {
+        type = positon + 1;
+        for (int i = 0; i < listTv.size(); i++) {
+            if (positon == i) {
+                listTv.get(i).setTextColor(Color.WHITE);
+                listTv.get(i).setBackgroundResource(R.drawable.xshape_rounrect_grayborder2);
+            } else {
+                listTv.get(i).setTextColor(Color.BLACK);
+                listTv.get(i).setBackgroundResource(R.drawable.xshape_rounrect_grayborder1);
+            }
         }
     }
 }

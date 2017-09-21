@@ -111,6 +111,9 @@
     <string name="bankuai">版块</string>
     <string name="qingshuruninybddzt">请输入您要表达的主题</string>
     <string name="zaizhelichangsyyb">在这里畅所欲言吧</string>
+    <string name="qingxuanzeyaoshangchuandetupian">请点击此处选择要上传的图片</string>
+    <string name="tianjiashujubiao">添加数据表</string>
+    <string name="shujubaocunshibai">数据保存失败!</string>
 
 
 </resources>

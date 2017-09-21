@@ -84,6 +84,7 @@ public class PreviewActivity extends BaseActivity {
                 openActivity(RelatedMeActivity.class);
                 break;
             case R.id.bt_act_preview8:
+                openActivity(AddDataListActivity.class);
                 break;
             case R.id.bt_act_preview9:
                 showShare();

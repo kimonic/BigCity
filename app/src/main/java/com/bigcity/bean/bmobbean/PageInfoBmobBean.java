@@ -24,6 +24,16 @@ public class PageInfoBmobBean extends BmobObject {
     private  String  date;
     /**当前日期信息总条数*/
     private  int  total;
+    /**当前类型信息总条数*/
+    private  int  totalNum=0;
+
+    public int getTotalNum() {
+        return totalNum;
+    }
+
+    public void setTotalNum(int totalNum) {
+        this.totalNum = totalNum;
+    }
 
     public String getName() {
         return name;

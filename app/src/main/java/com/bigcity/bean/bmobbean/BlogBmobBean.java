@@ -17,11 +17,11 @@ import cn.bmob.v3.BmobObject;
 public class BlogBmobBean extends BmobObject {
 
     /**头像url*/
-    private String  iconUrl;
+    private String  iconUrl="";
     /**标题*/
-    private String  title;
+    private String  title="";
     /**先期展示内容*/
-    private  String   content;
+    private  String   content="";
     /**配图1*/
     private String  imageUrl1="";
     /**配图2*/
@@ -42,6 +42,16 @@ public class BlogBmobBean extends BmobObject {
     private String   id;
     /**在某一天的id,当天的发表顺序,越小越早*/
     private int  dateId;
+    /**该类中的总排序id*/
+    private int numId=0;
+
+    public int getNumId() {
+        return numId;
+    }
+
+    public void setNumId(int numId) {
+        this.numId = numId;
+    }
 
     public int getDateId() {
         return dateId;
