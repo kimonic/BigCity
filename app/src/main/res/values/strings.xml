@@ -118,6 +118,7 @@
     <string name="biaotibunengweikong">标题内容不能为空!</string>
     <string name="wenzhangneirongbunengweikong">文章内容不能为空!</string>
     <string name="xiangqing">详情</string>
+    <string name="huifu">回复</string>
 
 
 </resources>
