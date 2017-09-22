@@ -23,6 +23,16 @@ public class BlogDetailsBmobBean extends BmobObject {
     private String  content;
     /**展示图片地址*/
     private String  imageUrl;
+    /**发表时间,年月日时分*/
+    private  String  publishTime;
+
+    public String getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(String publishTime) {
+        this.publishTime = publishTime;
+    }
 
     public String getId() {
         return id;

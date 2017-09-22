@@ -114,6 +114,10 @@
     <string name="qingxuanzeyaoshangchuandetupian">请点击此处选择要上传的图片</string>
     <string name="tianjiashujubiao">添加数据表</string>
     <string name="shujubaocunshibai">数据保存失败!</string>
+    <string name="zhengzaichulitpqsh">正在处理图片,请稍候!</string>
+    <string name="biaotibunengweikong">标题内容不能为空!</string>
+    <string name="wenzhangneirongbunengweikong">文章内容不能为空!</string>
+    <string name="xiangqing">详情</string>
 
 
 </resources>

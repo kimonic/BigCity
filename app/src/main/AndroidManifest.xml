@@ -148,6 +148,8 @@
         <activity android:name=".activity.ShowImageActivity" />
         <!--在bmob上添加新的数据表activity-->
         <activity android:name=".activity.AddDataListActivity" />
+        <!--帖子详情activity-->
+        <activity android:name=".activity.BlogDetailsActivity" />
 
         <meta-data
             android:name="UMENG_APPKEY"

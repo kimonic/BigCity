@@ -7,7 +7,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
@@ -27,6 +28,7 @@ import com.bigcity.bean.bmobbean.LoginInfoBmobBean;
 import com.bigcity.bean.bmobbean.PageInfoBmobBean;
 import com.bigcity.bean.bmobbean.TotalItemNumBmobBean;
 import com.bigcity.ui.MTopBarView;
+import com.bigcity.utils.BitmapHandleThread;
 import com.bigcity.utils.BitmapUtils;
 import com.bigcity.utils.DialogUtils;
 import com.bigcity.utils.ScreenSizeUtils;
@@ -35,16 +37,15 @@ import com.bigcity.utils.StringUtils;
 import com.bigcity.utils.TimeUtils;
 import com.bigcity.utils.ToastUtils;
 import com.google.gson.Gson;
-import com.mob.tools.MobLog;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
@@ -129,11 +130,6 @@ public class PublishedTopicsActivity extends BaseActivity {
     private boolean success1 = false, success2 = false, success3 = false;
 
     /**
-     * 判断已成功上传哪些图片
-     */
-    private int upCount = 0;
-
-    /**
      * 压缩后的图片文件集合
      */
     private List<File> listFile;
@@ -146,6 +142,22 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 当前类型下item的总数
      */
     private int itemTotal = 0;
+
+    /**
+     * 确认图片压缩已完成
+     */
+    private boolean compressOver1 = true, compressOver2 = true, compressOver3 = true;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case 1:
+                    commitInfo();
+                    break;
+            }
+        }
+    };
 
     @Override
     public int getLayoutResId() {
@@ -207,59 +219,94 @@ public class PublishedTopicsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == 1) {//继续检查结果,知道含有登陆信息
             checkLogin();
         } else if (data != null) {
+
             //遗留问题:小米4手机中,一旦点击图片则返回本activity,无法点击相册中的确定
-            ContentResolver resolver = getContentResolver();
-            try {
-                InputStream inputStream = resolver.openInputStream(data.getData());
-                String temp = data.getData().toString();
-                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            String temp = data.getData().toString();
 
-                File file = BitmapUtils.compressImage(bitmap);//生成文件
-                listFile.add(file);
+            String   hhh=temp;//--------------------------------------------
 
-                int density = ScreenSizeUtils.getDensity(this);
+            int density = ScreenSizeUtils.getDensity(this);
+            Bitmap bitmap = BitmapUtils.getBitmap(this, data.getData(), 100*density, 100*density);
+            Log.e("TAG", "onActivityResult: -----------位图大小----------"+bitmap.getByteCount()/1024f/1024);
 
-                switch (requestCode) {
-                    case 7:
-                        ivImageUrl1.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
-                        imageUrl1 = temp;
-                        file1 = file;
-                        break;
-                    case 8:
-                        ivImageUrl2.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
-                        imageUrl2 = temp;
-                        file2 = file;
-                        break;
-                    case 9:
-                        ivImageUrl3.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
-                        imageUrl3 = temp;
-                        file3 = file;
-                        break;
-                }
+            hhh=hhh+"-------"+bitmap.toString();
+            tvImage1.setText(hhh);
+            switch (requestCode) {
+                case 7:
+                    handleBitmapFromThread(bitmap, 1);//将位图压缩到100左右
+//                        File file = BitmapUtils.compressImage(bitmap);//生成文件
+                    ivImageUrl1.setImageBitmap(bitmap);
+//                    ivImageUrl1.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                    imageUrl1 = temp;
+                    break;
+                case 8:
+                    ivImageUrl2.setImageBitmap(bitmap);
 
+                    handleBitmapFromThread(bitmap, 2);
+//                    ivImageUrl2.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                    imageUrl2 = temp;
+//                        file2 = file;
+                    break;
+                case 9:
+//                    ivImageUrl3.setImageBitmap(BitmapUtils.getReduceBitmap(bitmap, 100 * density, 100 * density));
+                    ivImageUrl3.setImageBitmap(bitmap);
 
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                    handleBitmapFromThread(bitmap, 3);
+                    imageUrl3 = temp;
+//                        file3 = file;
+                    break;
             }
+
+
         }
 
 
     }
 
     /**
-     * 将 content://media/external/images/media/84类型的uri转化为实际的文件路径
+     * 开启线程处理图片压缩
      */
-    private String changeUri(Uri uri) {
-//        String[] proj = { MediaStore.Images.Media.DATA };
-        CursorLoader cursorLoader = new CursorLoader(this, uri, null, null, null, null);
-        Cursor actualimagecursor = cursorLoader.loadInBackground();
-        int actual_image_column_index = actualimagecursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        actualimagecursor.moveToFirst();
-        return actualimagecursor.getString(actual_image_column_index);
+    private void handleBitmapFromThread(Bitmap bitmap, int position) {
+        switch (position) {
+            case 1:
+                compressOver1 = false;
+                break;
+            case 2:
+                compressOver2 = false;
+                break;
+            case 3:
+                compressOver3 = false;
+                break;
+        }
+        BitmapHandleThread thread3 = new BitmapHandleThread(bitmap, position);
+        thread3.setListener(new BitmapHandleThread.CompressListener() {
+            @Override
+            public void result(File file, int position) {
+                listFile.add(file);
+                switch (position) {
+                    case 1:
+                        file1 = file;
+                        compressOver1 = true;
+                        break;
+                    case 2:
+                        file2 = file;
+                        compressOver2 = true;
+                        break;
+                    case 3:
+                        file3 = file;
+                        compressOver3 = true;
+                        break;
+                }
+            }
+        });
+        new Thread(thread3).start();
     }
+
 
     /**
      * 上传图片
@@ -268,18 +315,14 @@ public class PublishedTopicsActivity extends BaseActivity {
      * @param position 上传文件的位置
      */
     private void uploadingImage(File file, final int position) {
-        Log.e("TAG", "commitInfo: ---------uploadingImage------------提交信息3");
-
-//        String picPath = "sdcard/temp.jpg";
         if (file != null) {
             final BmobFile bmobFile = new BmobFile(file);
             bmobFile.uploadblock(new UploadFileListener() {
                 @Override
                 public void done(BmobException e) {
                     if (e == null) {
-                        //bmobFile.getFileUrl()--返回的上传文件的完整地址
+                        //bmobFile.getFileUrl()--返回的上传文件的完整地址,上传文件成功
                         listBmobUrl.add(bmobFile.getFileUrl());//保存已上传图片的地址,二次提交时删除已上传图片
-                        ToastUtils.showToast(PublishedTopicsActivity.this, "上传文件成功:" + bmobFile.getFileUrl());
                         switch (position) {
                             case 1:
                                 success1 = true;
@@ -295,13 +338,10 @@ public class PublishedTopicsActivity extends BaseActivity {
                                 break;
                         }
                         uploadingProgress();
-                        Log.e("TAG", "done: ---------------------" + bmobFile.getFileUrl());
-
                     } else {
                         ToastUtils.showToast(PublishedTopicsActivity.this, "上传文件失败：" + e.getMessage());
                         Log.e("TAG", "done: ---------------------" + e.getMessage());
                     }
-
                 }
 
                 @Override
@@ -313,16 +353,13 @@ public class PublishedTopicsActivity extends BaseActivity {
             uploadingProgress();
         }
 
-
     }
 
     /**
      * 一张接一张上传图片
      */
     private void uploadingProgress() {
-        Log.e("TAG", "commitInfo: ---------------------提交图片");
         if (success1) {
-            Log.e("TAG", "uploadingProgress: ---------------------第一张");
             success1 = false;
             if (file2 != null) {
                 uploadingImage(file2, 2);
@@ -330,19 +367,15 @@ public class PublishedTopicsActivity extends BaseActivity {
                 success2 = true;
                 uploadingImage(file3, 3);
             }
-        }else if (success2) {
-            Log.e("TAG", "uploadingProgress: ---------------------第二张");
+        } else if (success2) {
             success2 = false;
             if (file3 != null) {
                 uploadingImage(file3, 3);
             } else {
-                // TODO: 2017/9/21 上传其他数据
                 addDateSearch();
             }
-        }else  if (success3) {
-            Log.e("TAG", "uploadingProgress: ---------------------第三张");
+        } else if (success3) {
             success3 = false;
-            // TODO: 2017/9/21 上传其他数据
             addDateSearch();
         }
 
@@ -426,10 +459,45 @@ public class PublishedTopicsActivity extends BaseActivity {
         mtb.getRightTV().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                commitInfo();
+                if (checkContent()) {
+                    if (dialog == null) {
+                        dialog = DialogUtils.showProgreessDialog(PublishedTopicsActivity.this, getResources().getString(R.string.zaicidianjijtcbgym));
+                    } else {
+                        dialog.show();
+                    }
+                    new Thread() {
+                        @Override
+                        public void run() {
+                            while (!(compressOver1 && compressOver2 && compressOver3)) {
+                                try {
+                                    Thread.sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                            Message msg = Message.obtain();
+                            msg.what = 1;
+                            handler.sendMessage(msg);
+                        }
+                    }.start();
+                }
             }
         });
+    }
 
+    /**
+     * 检测发布的内容
+     */
+    private boolean checkContent() {
+        if (etTitle.getText().toString().trim().equals("")) {
+            ToastUtils.showToast(PublishedTopicsActivity.this, R.string.biaotibunengweikong);
+            return false;
+        }
+        if (etContent.getText().toString().trim().equals("")) {
+            ToastUtils.showToast(PublishedTopicsActivity.this, R.string.wenzhangneirongbunengweikong);
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -437,11 +505,11 @@ public class PublishedTopicsActivity extends BaseActivity {
      */
     private void commitInfo() {
         Log.e("TAG", "commitInfo: ---------------------提交信息1");
-        if (dialog == null) {
-            dialog = DialogUtils.showProgreessDialog(this, getResources().getString(R.string.zaicidianjijtcbgym));
-        } else {
-            dialog.show();
-        }
+//        if (dialog == null) {
+//            dialog = DialogUtils.showProgreessDialog(this, getResources().getString(R.string.zaicidianjijtcbgym));
+//        } else {
+//            dialog.show();
+//        }
         id = StringUtils.getSoleId();
 
         getPageName();
@@ -553,33 +621,29 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 添加详情内容
      */
     private void addDetails() {
-
-        Log.e("TAG", "commitInfo: ---------------------提交信息6");
-
         BlogDetailsBmobBean bean1 = new BlogDetailsBmobBean();
-
         bean1.setId(id);//贴子的唯一标识
         bean1.setContent(etContent.getText().toString().trim());//完整内容
         bean1.setAuthor(bean.getUserName());
-
+        bean1.setPublishTime(TimeUtils.getNowDateAll());
 //        bean1.setImageUrl(etDetailsImageUrl.getText().toString().trim());//详情图片连接
         bean1.setImageUrl("");//详情图片连接
+//        DateSearchBmobBean bean2 = new DateSearchBmobBean();
+//        bean2.setHasBlog("1");
+//        bean2.setName(pageName);
+//        bean2.setYear(TimeUtils.getCurrentYearStr());
+//        bean2.setMonth(TimeUtils.getCurrentMonthStr());
+//        bean2.setYsdCollection(TimeUtils.getStringDateShortN());
 
-        DateSearchBmobBean bean2 = new DateSearchBmobBean();
-        bean2.setHasBlog("1");
-        bean2.setName(pageName);
-        bean2.setYear(TimeUtils.getCurrentYearStr());
-        bean2.setMonth(TimeUtils.getCurrentMonthStr());
-        bean2.setYsdCollection(TimeUtils.getStringDateShortN());
         bean1.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
                 if (e == null) {
 
                     //更新用户登陆信息
+                    //------------------添加分页内容-----------
                     updateLoginInfo();
                     //数据保存成功
-                    //------------------添加分页内容-----------
 //                    ToastUtils.showToast(PublishedTopicsActivity.this, "数据保存成功!");
 
                 } else {
@@ -595,7 +659,7 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 更新登陆信息
      */
     private void updateLoginInfo() {
-        int topics = StringUtils.string2Integer(bean.getTotalReply()) + 1;
+        int topics = StringUtils.string2Integer(bean.getTotalTopics()) + 1;
         bean.setTotalTopics("" + topics);
         bean.setIdCollection(bean.getIdCollection() + "," + id);
 
@@ -606,6 +670,7 @@ public class PublishedTopicsActivity extends BaseActivity {
                 dialog.dismiss();
                 if (e == null) {
                     ToastUtils.showToast(PublishedTopicsActivity.this, "发表成功:");
+                    dellAllFile();
                     closeActivity();
                 } else {
                     ToastUtils.showToast(PublishedTopicsActivity.this, "发表失败：" + e.getMessage());
@@ -620,38 +685,25 @@ public class PublishedTopicsActivity extends BaseActivity {
      * 添加列表内容
      */
     private void addListInfo() {
-        Log.e("TAG", "commitInfo: ---------------------提交信息5");
-
         BlogBmobBean bean3 = new BlogBmobBean();
-
         bean3.setIconUrl(bean.getIconUrl());
-
         if (etContent.getText().toString().trim().length() > 100) {
             bean3.setContent(etContent.getText().toString().trim().subSequence(0, 100).toString());//显示的简略内容
         } else {
             bean3.setContent(etContent.getText().toString().trim());//显示的简略内容
         }
-
         bean3.setTitle(etTitle.getText().toString().trim());//标题
-
         bean3.setImageUrl1(imageBmobUrl1);//图片1
         bean3.setImageUrl2(imageBmobUrl2);//图片2
         bean3.setImageUrl3(imageBmobUrl3);//图片3
-
         bean3.setReplyCount("0");//回复数
         bean3.setPreviewCount("0");//浏览数
-
-
         bean3.setType("" + type);//类型
-
         bean3.setReleaseTimeDate(TimeUtils.getStringDateShortN());
-        bean3.setReleaseTimeHour(TimeUtils.getCurentTimeN());
+        bean3.setReleaseTimeHour(TimeUtils.getCurentTime());
         bean3.setId(id);
-
         bean3.setDateId(dateId);
-
         bean3.setNumId(itemTotal + 1);
-
         bean3.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {
@@ -888,5 +940,18 @@ public class PublishedTopicsActivity extends BaseActivity {
                 listTv.get(i).setBackgroundResource(R.drawable.xshape_rounrect_grayborder1);
             }
         }
+    }
+
+    /**
+     * 删除所有保存的图片
+     */
+    private boolean dellAllFile() {
+        boolean success = false;
+        if (listFile.size() > 0) {
+            for (int i = 0; i < listFile.size(); i++) {
+                success = listFile.get(i).delete();
+            }
+        }
+        return success;
     }
 }

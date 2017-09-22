@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
+import com.bigcity.utils.BitmapUtils;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -68,18 +70,26 @@ public class ShowImageActivity extends BaseActivity {
 
     @Override
     public void initView() {
-        ContentResolver resolver = getContentResolver();
-        try {
-            InputStream inputStream = resolver.openInputStream(Uri.parse(url));
-            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+        Bitmap bitmap= BitmapUtils.getBitmap(this,Uri.parse(url),0,0);
+        if (bitmap!=null){
             ivActShowimage.setImageBitmap(bitmap);
-        }catch (NullPointerException e){
+            Log.e("TAG", "initView: ---------------------"+bitmap.getByteCount()/1024f/1024);
+        }else {
             ivActShowimage.setImageResource(R.mipmap.ic_launcher);
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            ivActShowimage.setImageResource(R.mipmap.ic_launcher);
-            e.printStackTrace();
         }
+//        ContentResolver resolver = getContentResolver();
+//        try {
+//            InputStream inputStream = resolver.openInputStream(Uri.parse(url));
+//            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//            ivActShowimage.setImageBitmap(bitmap);
+//        }catch (NullPointerException e){
+//            ivActShowimage.setImageResource(R.mipmap.ic_launcher);
+//            e.printStackTrace();
+//        } catch (FileNotFoundException e) {
+//            ivActShowimage.setImageResource(R.mipmap.ic_launcher);
+//            e.printStackTrace();
+//        }
     }
 
     @Override
