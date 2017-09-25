@@ -237,7 +237,6 @@ public class BlogBmobBeanAddActivity extends BaseActivity {
         bean1.setId(id);
         bean1.setContent(etDetails.getText().toString().trim());
         bean1.setAuthor(etAuthor.getText().toString().trim());
-        bean1.setImageUrl(etDetailsImageUrl.getText().toString().trim());
 
         DateSearchBmobBean bean2 = new DateSearchBmobBean();
         bean2.setHasBlog("1");

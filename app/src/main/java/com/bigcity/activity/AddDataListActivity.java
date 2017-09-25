@@ -6,6 +6,7 @@ import android.widget.Button;
 
 import com.bigcity.R;
 import com.bigcity.base.BaseActivity;
+import com.bigcity.bean.bmobbean.CommentBmobBean;
 import com.bigcity.bean.bmobbean.TotalItemNumBmobBean;
 import com.bigcity.utils.ToastUtils;
 
@@ -50,10 +51,19 @@ public class AddDataListActivity extends BaseActivity {
     }
 
     private void addTotalItemNumBmobBean() {
-        TotalItemNumBmobBean bean = new TotalItemNumBmobBean();
-        bean.setType("1");
-        bean.setName("huzhuwenda");
-        bean.setTotal(0);
+//        TotalItemNumBmobBean bean = new TotalItemNumBmobBean();
+//        bean.setType("1");
+//        bean.setName("huzhuwenda");
+//        bean.setTotal(0);
+
+        CommentBmobBean  bean=new CommentBmobBean();
+        bean.setName("");
+        bean.setAddComment("");
+        bean.setAdmire("");
+        bean.setIconUrl("");
+        bean.setId("");
+        bean.setReplyNum("");
+        bean.setTime("");
         bean.save(new SaveListener<String>() {
             @Override
             public void done(String objectId, BmobException e) {

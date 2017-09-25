@@ -119,6 +119,12 @@
     <string name="wenzhangneirongbunengweikong">文章内容不能为空!</string>
     <string name="xiangqing">详情</string>
     <string name="huifu">回复</string>
+    <string name="meiyouxiangxineirong">没有详细内容</string>
+    <string name="pinglun">评论</string>
+    <string name="chiguaqunzhongyouhuashuo">吃瓜群众有话说</string>
+    <string name="fasong">发送</string>
+    <string name="zanshimeiyoupingluno">暂时没有评论哦!</string>
+    <string name="pinglunneirongbunnegweikong">评论内容不能为空!</string>
 
 
 </resources>

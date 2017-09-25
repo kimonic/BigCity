@@ -627,7 +627,6 @@ public class PublishedTopicsActivity extends BaseActivity {
         bean1.setAuthor(bean.getUserName());
         bean1.setPublishTime(TimeUtils.getNowDateAll());
 //        bean1.setImageUrl(etDetailsImageUrl.getText().toString().trim());//详情图片连接
-        bean1.setImageUrl("");//详情图片连接
 //        DateSearchBmobBean bean2 = new DateSearchBmobBean();
 //        bean2.setHasBlog("1");
 //        bean2.setName(pageName);

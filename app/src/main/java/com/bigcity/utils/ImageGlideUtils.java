@@ -47,7 +47,7 @@ public class ImageGlideUtils {
                 .into(view);
     }
 
-    /**加载圆形本地资源图片*/
+    /**加载本地资源图片*/
     public static  void loadImage(ImageView view,String url) {
         Glide.with(view.getContext())
                 .load(url)
@@ -55,7 +55,6 @@ public class ImageGlideUtils {
                 .placeholder(R.mipmap.ic_launcher)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)//图片缓存策略,这个一般必须有
                 .crossFade()//淡入淡出
-                .centerCrop()
                 .into(view);
     }
 }

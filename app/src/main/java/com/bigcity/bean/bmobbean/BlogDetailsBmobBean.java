@@ -21,8 +21,7 @@ public class BlogDetailsBmobBean extends BmobObject {
     private String   author;
     /**文章内容*/
     private String  content;
-    /**展示图片地址*/
-    private String  imageUrl;
+
     /**发表时间,年月日时分*/
     private  String  publishTime;
 
@@ -58,11 +57,5 @@ public class BlogDetailsBmobBean extends BmobObject {
         this.content = content;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
-    }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
 }

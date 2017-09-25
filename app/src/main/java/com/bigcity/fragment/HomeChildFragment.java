@@ -1,12 +1,15 @@
 package com.bigcity.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.bigcity.R;
+import com.bigcity.activity.BlogDetailsActivity;
 import com.bigcity.activity.PublishedTopicsActivity;
 import com.bigcity.adapter.HomeChildFragLvAdapter;
 import com.bigcity.base.BaseFragment;
@@ -151,6 +154,19 @@ public class HomeChildFragment extends BaseFragment {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
                 getItemInfo();
+            }
+        });
+
+        lvFragHomeChild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(getActivity(), BlogDetailsActivity.class);
+                intent.putExtra("id",listBlog.get(position).getId());
+                intent.putExtra("title",listBlog.get(position).getTitle());
+                intent.putExtra("imageurl1",listBlog.get(position).getImageUrl1());
+                intent.putExtra("imageurl2",listBlog.get(position).getImageUrl2());
+                intent.putExtra("imageurl3",listBlog.get(position).getImageUrl3());
+                startActivity(intent);
             }
         });
 
