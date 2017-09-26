@@ -1,15 +1,17 @@
 package com.bigcity.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.text.Editable;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
-import android.text.TextWatcher;
 import android.text.style.ImageSpan;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +41,11 @@ import com.bigcity.utils.TimeUtils;
 import com.bigcity.utils.ToastUtils;
 import com.google.gson.Gson;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -83,17 +89,22 @@ public class BlogDetailsActivity extends BaseActivity {
     ListView lv;
     @BindView(R.id.tv_act_blogdetails_hint)
     TextView tvHint;
-    @BindView(R.id.et_act_blogdetails_reply)
-    EditText etReply;
-    @BindView(R.id.tv_act_blogdetails_face)
-    TextView tvFace;
-    @BindView(R.id.tv_act_blogdetails_send)
-    TextView tvSend;
 
-    @BindView(R.id.viewpager_chatact)
-    ViewPager faceViewpager;
-    @BindView(R.id.linearlayout_chatact)
-    LinearLayout faceBottom;
+
+    @BindView(R.id.et_act_blogdetails_reply)
+    EditText etReply1;
+    @BindView(R.id.tv_act_blogdetails_face)
+    TextView tvFace1;
+    @BindView(R.id.tv_act_blogdetails_send)
+    TextView tvSend1;
+
+    private EditText etReply;
+    private TextView tvFace;
+    private TextView tvSend;
+
+    private ViewPager faceViewpager;
+    private LinearLayout faceBottom;
+
 
     /**
      * 唯一标识id
@@ -104,9 +115,10 @@ public class BlogDetailsActivity extends BaseActivity {
     private String imageUrl2;
     private String imageUrl3;
     private BlogDetailsBmobBean bean;
-    private CommentBmobBean commentBmobBean;
 
-    private List<CommentBmobBean>  list;
+    private BlogDetailsActLvAdapter adapter;
+
+    private List<CommentBmobBean> list;
 
     private AlertDialog dialog;
     private int faceCount = 0;
@@ -119,6 +131,7 @@ public class BlogDetailsActivity extends BaseActivity {
     // 7列3行
     private int columns = 6;
     private int rows = 4;
+    private AlertDialog dialogFace;
     //-------------------表情相关---------------------------------------------------------------------------
 
     @Override
@@ -130,21 +143,33 @@ public class BlogDetailsActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tv_act_blogdetails_face://点击选择表情
+                etReply.setText(changeStr(etReply1.getText().toString()));
+                etReply.setSelection(etReply.getText().length());
+                dialogFace.show();
+                break;
+            case R.id.tv_facesel_face://点击选择表情
                 if (faceCount % 2 == 0) {
-                    faceViewpager.setVisibility(View.VISIBLE);
-                    faceBottom.setVisibility(View.VISIBLE);
+                    dialogFace.show();
                 } else {
-                    faceViewpager.setVisibility(View.GONE);
-                    faceBottom.setVisibility(View.GONE);
+                    etReply1.setText(changeStr(etReply.getText().toString()));
+                    etReply1.setSelection(etReply1.getText().length());
+                    dialogFace.dismiss();
+
+
                 }
                 faceCount++;
                 break;
-            case R.id.tv_act_blogdetails_send://点击发送评论
-                if (!etReply.getText().toString().equals("")){
+            case R.id.tv_facesel_send://点击发送评论
+                if (!etReply.getText().toString().equals("")) {
+                    etReply1.setText(changeStr(etReply.getText().toString()));
+                    etReply1.setSelection(etReply1.getText().length());
                     checkLogin();
                 }
-
-
+                break;
+            case R.id.tv_act_blogdetails_send://点击发送评论
+                if (!etReply1.getText().toString().equals("")) {
+                    checkLogin();
+                }
 
 
                 break;
@@ -157,7 +182,7 @@ public class BlogDetailsActivity extends BaseActivity {
     }
 
     private void saveReply() {
-        CommentBmobBean  bean1=new CommentBmobBean();
+        CommentBmobBean bean1 = new CommentBmobBean();
         bean1.setName(loginInfoBmobBean.getUserName());
         bean1.setReplyNum("0");
         bean1.setTime(TimeUtils.getNowDateAll());
@@ -166,21 +191,24 @@ public class BlogDetailsActivity extends BaseActivity {
         bean1.setAdmire("0");
         bean1.setAddComment("");
         bean1.setContent(etReply.getText().toString().trim());
+        bean1.setOrderTime(TimeUtils.getOrderTime());
 
-        bean1. save(new SaveListener<String>() {
-                    @Override
-                    public void done(String objectId, BmobException e) {
-                        if (e == null) {
-                        //数据保存成功
-                            etReply.setText("");
-                            initDataFromInternet();
-                        } else {
-                        //数据保存失败
-                            ToastUtils.showToast(BlogDetailsActivity.this, R.string.shujubaocunshibai);
+        bean1.save(new SaveListener<String>() {
+            @Override
+            public void done(String objectId, BmobException e) {
+                if (e == null) {
+                    //数据保存成功
+                    etReply.setText("");
+                    etReply1.setText("");
+                    dialogFace.dismiss();
+                    initDataFromInternet();
+                } else {
+                    //数据保存失败
+                    ToastUtils.showToast(BlogDetailsActivity.this, R.string.shujubaocunshibai);
 
-                        }
-                    }
-                });
+                }
+            }
+        });
     }
 
     private void checkLogin() {
@@ -215,15 +243,15 @@ public class BlogDetailsActivity extends BaseActivity {
                                 sp.put("date", TimeUtils.getStringDateShortN());
                                 sp.put("loginInfo", gson.toJson(loginInfoBmobBean, LoginInfoBmobBean.class));
 
-                                    saveReply();
+                                saveReply();
                             }
                         } else {
                             ToastUtils.showToast(BlogDetailsActivity.this, "查询失败：" + e.getMessage() + "," + e.getErrorCode());
                         }
                     }
                 });
-            }else {
-                    saveReply();
+            } else {
+                saveReply();
             }
 
         } else {
@@ -237,11 +265,10 @@ public class BlogDetailsActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode==1){
+        if (requestCode == 1) {
             checkLogin();
         }
     }
-
 
 
     @Override
@@ -271,8 +298,21 @@ public class BlogDetailsActivity extends BaseActivity {
 
         //--------------------------------------表情相关------------------------------------------------
 
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(this).inflate(R.layout.dialog_facesel, null);
+
+        faceViewpager = (ViewPager) view.findViewById(R.id.viewpager_chatact1);
+        faceBottom = (LinearLayout) view.findViewById(R.id.linearlayout_chatact1);
+        etReply = (EditText) view.findViewById(R.id.et_facesel_reply);
+        tvFace = (TextView) view.findViewById(R.id.tv_facesel_face);
+        tvSend = (TextView) view.findViewById(R.id.tv_facesel_send);
+
+        dialogFace = DialogUtils.showTimeSel(this, view);
+        dialogFace.dismiss();
+
+
         initStaticFaces();//初始化表情数据源
         initViewPager();//初始化表情展示
+        list = new ArrayList<>();
 
 
         //--------------------------------------表情相关------------------------------------------------
@@ -291,6 +331,8 @@ public class BlogDetailsActivity extends BaseActivity {
         });
         tvFace.setOnClickListener(this);
         tvSend.setOnClickListener(this);
+        tvFace1.setOnClickListener(this);
+        tvSend1.setOnClickListener(this);
         faceViewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
@@ -351,12 +393,10 @@ public class BlogDetailsActivity extends BaseActivity {
             public void done(List<CommentBmobBean> object, BmobException e) {
                 dialog.dismiss();
                 if (e == null) {
-                    if (object.size() == 0) {
-                        //无查询数据
-                    } else {
+                    if (object.size() != 0) {
                         //有查询数据
-                        list = object;
-                        Log.e("TAG", "done: -------hsdufhlawfh---------"+list.size());
+                        list.clear();
+                        list.addAll(object);
                     }
                     loadInternetDataToUi();
                 } else {
@@ -377,17 +417,36 @@ public class BlogDetailsActivity extends BaseActivity {
             loadImage(imageUrl2, 2);
             loadImage(imageUrl3, 3);
         }
-        Log.e("TAG", "loadInternetDataToUi: -----------------加载评论数据----???"+commentBmobBean);
 
-        if (list.size()>0){//有评论数据
-            Log.e("TAG", "loadInternetDataToUi: -----------------加载评论数据----");
-            BlogDetailsActLvAdapter  adapter=new BlogDetailsActLvAdapter(this,list);
-            lv.setAdapter(adapter);
+        if (list.size() > 0) {//有评论数据
+            orderList();
+            if (adapter == null) {
+                adapter = new BlogDetailsActLvAdapter(this, list);
+                lv.setAdapter(adapter);
+            } else {
+                adapter.notifyDataSetChanged();
+            }
+            lv.setVisibility(View.VISIBLE);
             tvHint.setVisibility(View.GONE);
-        }else {
+        } else {
             tvHint.setVisibility(View.VISIBLE);
             lv.setVisibility(View.GONE);
         }
+
+    }
+
+    private void orderList() {
+
+        Collections.sort(list, new Comparator<CommentBmobBean>() {
+            @Override
+            public int compare(CommentBmobBean o1, CommentBmobBean o2) {
+                if (o2.getOrderTime() - o1.getOrderTime() > 0) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            }
+        });
 
     }
 
@@ -429,6 +488,60 @@ public class BlogDetailsActivity extends BaseActivity {
 
     }
 
+    /**
+     * 带表情的字符串转化
+     */
+
+    private SpannableString changeStr(String string) {
+        SpannableString spannableString = new SpannableString(string);
+
+        for (int i = 0; i < staticFacesList.size(); i++) {
+            if (string.contains(staticFacesList.get(i))) {
+                List<Integer> listTemp = getIndex(staticFacesList.get(i), string);
+                Bitmap bitmap = getImageFromAssetsFile(string.substring(listTemp.get(0) - 4, listTemp.get(0) + 16));
+                for (int j = 0; j < listTemp.size(); j++) {
+                    ImageSpan imgSpan = new ImageSpan(this, bitmap);
+                    spannableString.setSpan(imgSpan, (listTemp.get(j) - 6),
+                            (listTemp.get(j) + 18), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                }
+            }
+
+        }
+        return spannableString;
+    }
+
+
+    /**
+     * 从Assets中读取图片,根据图片的路径,png/f_static_000.png
+     */
+    private Bitmap getImageFromAssetsFile(String fileName) {
+        Bitmap image = null;
+        AssetManager am = getResources().getAssets();
+        try {
+            InputStream is = am.open(fileName);
+            image = BitmapFactory.decodeStream(is);
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    /**
+     * 获取字符串中包含的所有某个字符串的开始索引集合
+     */
+    private List<Integer> getIndex(String key, String str) {
+        List<Integer> listInt = new ArrayList<>();
+        int a = str.indexOf(key);
+        listInt.add(a);
+        while (a != -1) {
+            a = str.indexOf(key, a + 10);
+            if (a != -1) {
+                listInt.add(a);
+            }
+        }
+        return listInt;
+    }
     //--------------------------------------表情相关------------------------------------------------
 
     /**
@@ -466,11 +579,11 @@ public class BlogDetailsActivity extends BaseActivity {
 
     private View viewPagerItem(int position) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.face_gridview, null);//表情布局
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.face_gridview, null);//表情布局
         GridView gridview = (GridView) layout.findViewById(R.id.chart_face_gv);
-        /**
-         * 注：因为每一页末尾都有一个删除图标，所以每一页的实际表情columns *　rows　－　1; 空出最后一个位置给删除图标
-         * */
+//        /**
+//         * 注：因为每一页末尾都有一个删除图标，所以每一页的实际表情columns *　rows　－　1; 空出最后一个位置给删除图标
+//         * */
         List<String> subList = new ArrayList<>();
         subList.addAll(staticFacesList
                 .subList(position * (columns * rows - 1),
@@ -478,9 +591,7 @@ public class BlogDetailsActivity extends BaseActivity {
                                 .size() ? staticFacesList.size() : (columns
                                 * rows - 1)
                                 * (position + 1)));
-        /**
-         * 末尾添加删除图标
-         * */
+//         * 末尾添加删除图标
         subList.add("emotion_del_normal.png");
         FaceGVAdapter mGvAdapter = new FaceGVAdapter(subList, this);
         gridview.setAdapter(mGvAdapter);
@@ -491,7 +602,6 @@ public class BlogDetailsActivity extends BaseActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     String png = ((TextView) ((LinearLayout) view).getChildAt(1)).getText().toString();
-                    Log.e("TAG", "initViewPager: -------------gridview--------" + png);
 
                     if (!png.contains("emotion_del_normal")) {// 如果不是删除图标
                         insert(getFace(png));
@@ -520,14 +630,14 @@ public class BlogDetailsActivity extends BaseActivity {
                 if (iCursorEnd == iCursorStart) {
                     if (isDeletePng(iCursorEnd)) {
                         String st = "#[png/f_static_000.png]#";
-                        ((Editable) etReply.getText()).delete(
+                        ( etReply.getText()).delete(
                                 iCursorEnd - st.length(), iCursorEnd);
                     } else {
-                        ((Editable) etReply.getText()).delete(iCursorEnd - 1,
+                        ( etReply.getText()).delete(iCursorEnd - 1,
                                 iCursorEnd);
                     }
                 } else {
-                    ((Editable) etReply.getText()).delete(iCursorStart,
+                    ( etReply.getText()).delete(iCursorStart,
                             iCursorEnd);
                 }
             }
@@ -554,9 +664,9 @@ public class BlogDetailsActivity extends BaseActivity {
     private SpannableStringBuilder getFace(String png) {
         SpannableStringBuilder sb = new SpannableStringBuilder();
         try {
-            /**
-             * 格式：#[face/png/f_static_000.png]#，以方便判斷當前圖片是哪一個
-             *😂😂😂😂😃😃😃😃😄😄😄😄🚄🚅🚄🚇🚉🚌🚑🚒⛽🚏🚲🚚🚙🚗🚕🚓🚧🚥🚀 */
+//            /**
+//             * 格式：#[face/png/f_static_000.png]#，以方便判斷當前圖片是哪一個
+//             *😂😂😂😂😃😃😃😃😄😄😄😄🚄🚅🚄🚇🚉🚌🚑🚒⛽🚏🚲🚚🚙🚗🚕🚓🚧🚥🚀 */
             String tempText = "#[" + png + "]#";
             sb.append(tempText);
 
@@ -589,7 +699,7 @@ public class BlogDetailsActivity extends BaseActivity {
 
     private ImageView dotsItem(int position) {
         LayoutInflater inflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View layout = inflater.inflate(R.layout.dot_image, null);
+        @SuppressLint("InflateParams") View layout = inflater.inflate(R.layout.dot_image, null);
         ImageView iv = (ImageView) layout.findViewById(R.id.face_dot);
         iv.setId(position);
         return iv;
@@ -603,9 +713,7 @@ public class BlogDetailsActivity extends BaseActivity {
             staticFacesList = new ArrayList<>();
             String[] faces = getAssets().list("png");
             //将Assets中的表情名称转为字符串一一添加进staticFacesList
-            for (int i = 0; i < faces.length; i++) {
-                staticFacesList.add(faces[i]);
-            }
+            Collections.addAll(staticFacesList, faces);
             //去掉删除图片
             staticFacesList.remove("emotion_del_normal.png");
         } catch (Exception e) {

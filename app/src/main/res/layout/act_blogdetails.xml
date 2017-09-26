@@ -27,12 +27,14 @@
             <TextView
                 android:id="@+id/tv_act_blogdetails_title"
                 android:layout_width="match_parent"
-                android:layout_height="38dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:background="@color/color_white"
                 android:gravity="center_vertical"
+                android:paddingBottom="10dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:layout_marginTop="10dp"
+                android:paddingTop="10dp"
                 android:text="这是一个标题"
                 android:textColor="@color/color_black"
                 android:textSize="20sp" />
@@ -141,90 +143,67 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_act_blogdetailsbac" />
+
             <TextView
                 android:id="@+id/tv_act_blogdetails_hint"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:textSize="14sp"
-                android:textColor="@color/color_black"
                 android:gravity="center"
                 android:text="@string/zanshimeiyoupingluno"
-                />
-
+                android:textColor="@color/color_black"
+                android:textSize="14sp" />
 
 
         </LinearLayout>
     </ScrollView>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
-        android:gravity="center_vertical"
-        >
+        android:gravity="center_vertical">
+
         <EditText
             android:id="@+id/et_act_blogdetails_reply"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:hint="@string/chiguaqunzhongyouhuashuo"
-            android:background="@drawable/xshape_rounrect_grayborder"
-            android:paddingTop="5dp"
-            android:paddingLeft="5dp"
-            android:paddingBottom="5dp"
-            android:paddingRight="5dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_weight="1"
-            />
+            android:background="@drawable/xshape_rounrect_grayborder"
+            android:hint="@string/chiguaqunzhongyouhuashuo"
+            android:paddingBottom="5dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:textSize="14sp" />
 
 
         <TextView
             android:id="@+id/tv_act_blogdetails_face"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:background="@drawable/act_blogdetails_face"
-            />
+            android:background="@drawable/act_blogdetails_face" />
+
         <TextView
             android:id="@+id/tv_act_blogdetails_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/xshape_roundrect_bluebac"
+            android:gravity="center"
+            android:paddingBottom="5dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp"
-            android:textSize="14sp"
-            android:textColor="@color/color_white"
             android:text="@string/fasong"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:gravity="center"
-
-            android:background="@drawable/xshape_roundrect_bluebac"
+            android:textColor="@color/color_white"
+            android:textSize="14sp"
 
             />
     </LinearLayout>
 
-
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="170dp"
-        android:id="@+id/viewpager_chatact"
-        android:visibility="gone"
-        >
-
-    </android.support.v4.view.ViewPager>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="20dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/linearlayout_chatact"
-        android:visibility="gone"
-        >
-
-    </LinearLayout>
 
 </LinearLayout>

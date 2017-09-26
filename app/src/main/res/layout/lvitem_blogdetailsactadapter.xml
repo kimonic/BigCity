@@ -7,7 +7,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="38dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        >
 
         <ImageView
             android:id="@+id/iv_blogdetailsadapter_icon"
@@ -28,25 +30,26 @@
             android:textColor="@color/color_black"
             android:textSize="14sp" />
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/act_blogdetails_zan"
-            android:contentDescription="@null" />
+        <!--<ImageView-->
+            <!--android:layout_width="15dp"-->
+            <!--android:layout_height="15dp"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:layout_marginLeft="10dp"-->
+            <!--android:layout_marginRight="10dp"-->
+            <!--android:background="@drawable/act_blogdetails_zan"-->
+            <!--android:contentDescription="@null" />-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/iv_blogdetailsadapter_replynum"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="23"-->
+            <!--android:textColor="@color/color_gray"-->
+            <!--android:textSize="14sp" />-->
 
         <TextView
-            android:id="@+id/iv_blogdetailsadapter_replynum"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="23"
-            android:textColor="@color/color_gray"
-            android:textSize="14sp" />
-
-        <TextView
+            android:id="@+id/tv_blogdetailsadapter_admire"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_gravity="center_vertical"
@@ -76,6 +79,7 @@
         android:paddingStart="60dp"
         android:paddingRight="20dp"
         android:paddingEnd="20dp"
+        android:layout_marginBottom="10dp"
 
 
 

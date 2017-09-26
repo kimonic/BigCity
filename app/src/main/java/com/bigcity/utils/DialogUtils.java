@@ -170,7 +170,42 @@ public class DialogUtils {
     }
 
 
+    /**
+     *
+     * 时间筛选dialog--integralrecodeactivity中显示
+     * @param context   上下文
+     * @return   alertdialog(v7)
+     */
+    public static AlertDialog showTimeSel(final Context context, View view) {
 
+        final AlertDialog dialog = new AlertDialog.Builder(context).create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == MotionEvent.ACTION_UP) {
+                    dialog.dismiss();
+                    return true;
+                } else {
+                    return false; //默认返回 false
+                }
+            }
+        });
+        dialog.show();
+        //一定得在show完dialog后来set属性
+        Window window = dialog.getWindow();
+        if (window != null) {
+            window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+            window.setGravity(Gravity.BOTTOM);
+            ColorDrawable drawable=new ColorDrawable(Color.WHITE);
+            window.setBackgroundDrawable(drawable);
+//            window.setBackgroundDrawable(new ColorDrawable());
+            window.setContentView(view);
+            window.setWindowAnimations(R.style.AnimBottom);
+        }
+
+        return dialog;
+    }
 
 
 

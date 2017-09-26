@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+  
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            >
+            <EditText
+                android:id="@+id/et_facesel_reply"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:hint="@string/chiguaqunzhongyouhuashuo"
+                android:background="@drawable/xshape_rounrect_grayborder"
+                android:paddingTop="5dp"
+                android:paddingLeft="5dp"
+                android:paddingBottom="5dp"
+                android:paddingRight="5dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_weight="1"
+                />
+
+
+            <TextView
+                android:id="@+id/tv_facesel_face"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:background="@drawable/act_blogdetails_face"
+                />
+            <TextView
+                android:id="@+id/tv_facesel_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:textSize="14sp"
+                android:textColor="@color/color_white"
+                android:text="@string/fasong"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:background="@drawable/xshape_roundrect_bluebac"
+
+                />
+        </LinearLayout>
+
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:id="@+id/viewpager_chatact1"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:id="@+id/linearlayout_chatact1"
+            >
+        </LinearLayout>
+
+
+</LinearLayout>

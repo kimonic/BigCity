@@ -125,6 +125,8 @@
     <string name="fasong">发送</string>
     <string name="zanshimeiyoupingluno">暂时没有评论哦!</string>
     <string name="pinglunneirongbunnegweikong">评论内容不能为空!</string>
+    <string name="niyijingdianguozanla">你已经点过赞啦!</string>
+    <string name="dianzanchenggong">点赞成功!</string>
 
 
 </resources>

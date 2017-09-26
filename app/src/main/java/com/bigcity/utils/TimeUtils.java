@@ -80,6 +80,17 @@ public class TimeUtils {
     }
 
     /**
+     * 获取现在日期,用于排序使用
+     *
+     * @return 返回短时间格式 yyyy-MM-dd
+     */
+    public static long getOrderTime() {
+        Date currentTime = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddhhmmss", Locale.getDefault());
+        return StringUtils.string2Long(formatter.format(currentTime));
+    }
+
+    /**
      * 将短时间格式字符串转换为时间 yyyy-MM-dd
      *
      * @param strDate 日期

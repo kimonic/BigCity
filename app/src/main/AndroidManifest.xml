@@ -8,8 +8,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -25,8 +25,8 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <!-- 蓝牙分享所需的权限 -->
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
@@ -44,52 +44,59 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.WelcomeActivity">
             <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN" />-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
 
-                <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
         <!--登陆activity-->
-        <activity android:name=".activity.LoginActivity"/>
+        <activity android:name=".activity.LoginActivity" />
         <!--注册activity-->
-        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.RegisterActivity" />
         <!--意见反馈activity-->
-        <activity android:name=".activity.FeedbackActivity"/>
+        <activity android:name=".activity.FeedbackActivity" />
         <!--我的activity-->
-        <activity android:name=".activity.MyActivity"/>
+        <activity android:name=".activity.MyActivity" />
         <!--好物推荐activity-->
-        <activity android:name=".activity.GoodRecommendActivity"/>
+        <activity android:name=".activity.GoodRecommendActivity" />
         <!--摇一摇activity-->
-        <activity android:name=".activity.SharkItOffActivity"/>
-        <!--首页activity-->
-        <activity android:name=".activity.HomeActivity"/>
+        <activity android:name=".activity.SharkItOffActivity" />
+        <!--&lt;!&ndash;首页activity&ndash;&gt;-->
+        <!--<activity android:name=".activity.HomeActivity" />-->
         <!--与我相关activity-->
-        <activity android:name=".activity.RelatedMeActivity"/>
+        <activity android:name=".activity.RelatedMeActivity" />
 
 
+        <!--&lt;!&ndash;预览界面activity&ndash;&gt;-->
+        <!--<activity android:name=".activity.PreviewActivity">-->
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN" />-->
 
-        <!--预览界面activity-->
-        <activity android:name=".activity.PreviewActivity">
+        <!--<category android:name="android.intent.category.LAUNCHER" />-->
+        <!--</intent-filter>-->
+        <!--</activity>-->
+
+        <!--直接显示主界面activity-->
+        <activity android:name=".activity.HomeActivity">
             <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-
-
 
 
         <!-- ShareSDK的activity -->
         <activity
             android:name="com.mob.tools.MobUIShell"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden|adjustResize" >
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
             <intent-filter>
                 <data android:scheme="tencent100371282" />
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -103,39 +110,44 @@
             <!--集成line客户端登录授权，需要添如下格式的过滤器-->
             <intent-filter>
                 <data android:scheme="line.1477692153" />
-                <action android:name="android.intent.action.VIEW"/>
+                <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.BROWSABLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
         </activity>
         <!-- 填写您从Mob开发者后台中得到的Appkey和AppSecret -->
-        <meta-data android:name="Mob-AppKey" android:value="1fc2ed637ab12"/>
-        <meta-data android:name="Mob-AppSecret" android:value="5e6c570565e5a15c9c581a460affa798"/>
+        <meta-data
+            android:name="Mob-AppKey"
+            android:value="1fc2ed637ab12" />
+        <meta-data
+            android:name="Mob-AppSecret"
+            android:value="5e6c570565e5a15c9c581a460affa798" />
 
 
         <!--微信分享回调 -->
         <activity
             android:name=".wxapi.WXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!--易信分享回调 -->
         <activity
             android:name=".yxapi.YXEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <!-- 支付宝分享回调 -->
         <activity
             android:name=".apshare.ShareEntryActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"/>
+            android:exported="true"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
         <!--bomb测试activity-->
         <activity android:name=".bombtest.BombTestActivity" />
         <!--BlogBmobBean数据库添加activity-->
@@ -153,18 +165,13 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="597a9ac607fe65514a000e55">
-        </meta-data>
+            android:value="597a9ac607fe65514a000e55"/>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="630362080f7dd1f8e7455cdfe4f10e57">
-        </meta-data>
+            android:value="630362080f7dd1f8e7455cdfe4f10e57"/>
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="12121" >
-        </meta-data>
-
-
+            android:value="12121"/>
 
 
     </application>

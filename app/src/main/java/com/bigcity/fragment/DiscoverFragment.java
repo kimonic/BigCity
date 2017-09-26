@@ -1,9 +1,12 @@
 package com.bigcity.fragment;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.bigcity.R;
+import com.bigcity.activity.GoodRecommendActivity;
+import com.bigcity.activity.SharkItOffActivity;
 import com.bigcity.adapter.CommonLVAdapter;
 import com.bigcity.adapter.DiscoverFragLvAdapter;
 import com.bigcity.base.BaseFragment;
@@ -46,10 +49,10 @@ public class DiscoverFragment extends BaseFragment {
     @Override
     public void initDataFromIntent() {
         list = new ArrayList<>();
-            CommonBean bean = new CommonBean();
-            bean.setTitle("漂流瓶");
-            bean.setImaId1(R.drawable.frag_discover_piaoliuping);
-            list.add(bean);
+        CommonBean bean = new CommonBean();
+        bean.setTitle("漂流瓶");
+        bean.setImaId1(R.drawable.frag_discover_piaoliuping);
+        list.add(bean);
 
         CommonBean bean1 = new CommonBean();
         bean1.setTitle("摇一摇");
@@ -57,7 +60,7 @@ public class DiscoverFragment extends BaseFragment {
         list.add(bean1);
 
 
-        CommonBean bean2= new CommonBean();
+        CommonBean bean2 = new CommonBean();
         bean2.setTitle("好物推荐");
         bean2.setImaId1(R.drawable.frag_discover_piaoliuping);
         list.add(bean2);
@@ -73,7 +76,24 @@ public class DiscoverFragment extends BaseFragment {
 
     @Override
     public void initListener() {
-
+        lvFragDiscover.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                switch (position) {
+                    case 0:
+                        break;
+                    case 1:
+                        openActivity(SharkItOffActivity.class);
+                        break;
+                    case 2:
+                        openActivity(GoodRecommendActivity.class);
+                        break;
+//                         case :break;
+//                         case :break;
+//                         case :break;
+                }
+            }
+        });
     }
 
     @Override

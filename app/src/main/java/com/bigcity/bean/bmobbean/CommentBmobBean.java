@@ -31,6 +31,26 @@ public class CommentBmobBean extends BmobObject {
     private  String  addComment;
     /**评论内容*/
     private  String  content;
+    /**排序时间*/
+    private  long  orderTime;
+    /**点赞用户id集合*/
+    private  String  userIdCollection;
+
+    public String getUserIdCollection() {
+        return userIdCollection;
+    }
+
+    public void setUserIdCollection(String userIdCollection) {
+        this.userIdCollection = userIdCollection;
+    }
+
+    public long getOrderTime() {
+        return orderTime;
+    }
+
+    public void setOrderTime(long orderTime) {
+        this.orderTime = orderTime;
+    }
 
     public String getContent() {
         return content;

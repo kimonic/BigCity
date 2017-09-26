@@ -125,6 +125,19 @@ public class StringUtils {
 
     }
 
+    /**
+     *将字符串转化为int型数字
+     * @param intString  数字型字符串
+     * @return     字符串数字或0
+     */
+    public static long  string2Long(String intString){
+        try {
+            return Long.parseLong(intString);
+        }catch (NumberFormatException e){
+            return 0;
+        }
+
+    }
 
     /**
      *将字符串转化为float型数字
